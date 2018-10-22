@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import Start from './start'
+import App from './app'
 
-ReactDom.render(<Start/>, document.getElementById('root'))
+ReactDom.render(<App/>, document.getElementById('root'))

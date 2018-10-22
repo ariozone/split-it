@@ -20,7 +20,7 @@ export default class Start extends React.Component {
       <div className="container-fluid pt-5">
         <h1 className="text-center mx-auto mt-5">How many people?</h1>
         <form className="mx-auto" onSubmit={this.handleSubmit}>
-          <div className="form-group col-3">
+          <div className="form-group col-8">
             <select className="form-control m-5" id="seats" onChange={this.handleChange}>
               <option value="0">0</option>
               <option value="2">2</option>
