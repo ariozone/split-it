@@ -7,15 +7,19 @@ export default class Start extends React.Component {
       restaurant: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange() {
+
+  }
+  handleSubmit() {
 
   }
   render() {
     return (
       <div className="container-fluid pt-5">
         <h1 className="text-center mx-auto mt-5">How many people?</h1>
-        <form className="mx-auto">
+        <form className="mx-auto" onSubmit={this.handleSubmit}>
           <div className="form-group col-3">
             <select className="form-control m-5" id="seats" onChange={this.handleChange}>
               <option value="0">0</option>
