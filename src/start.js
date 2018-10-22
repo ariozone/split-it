@@ -1,11 +1,18 @@
 import React from 'react'
 export default class Start extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      seats: 0,
+      restaurant: ''
+    }
+  }
   render() {
     return (
       <div className="container-fluid pt-5">
         <h1 className="text-center mx-auto mt-5">How many people?</h1>
-        <form>
-          <div className="form-group col-6">
+        <form className="mx-auto">
+          <div className="form-group col-3">
             <select className="form-control m-5" id="seats">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -28,6 +35,17 @@ export default class Start extends React.Component {
               <option value="19">19</option>
               <option value="20">20</option>
             </select></div>
+          <div className="form-group">
+            <label htmlFor="restaurantName">Restaurant Name:</label>
+            <input type="text" className="form-control" id="restaurantName"/>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="date-input" className="col-2 col-form-label">Date</label>
+            <div className="col-10">
+              <input className="form-control" type="date" value={Date(document.isDefaultNamespace.date)} id="date-input"/>
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary btn-lg">Next</button>
         </form>
       </div>
     )
