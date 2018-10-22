@@ -6,6 +6,10 @@ export default class Start extends React.Component {
       seats: 0,
       restaurant: ''
     }
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange() {
+
   }
   render() {
     return (
@@ -13,8 +17,8 @@ export default class Start extends React.Component {
         <h1 className="text-center mx-auto mt-5">How many people?</h1>
         <form className="mx-auto">
           <div className="form-group col-3">
-            <select className="form-control m-5" id="seats">
-              <option value="1">1</option>
+            <select className="form-control m-5" id="seats" onChange={this.handleChange}>
+              <option value="0">0</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
@@ -37,12 +41,12 @@ export default class Start extends React.Component {
             </select></div>
           <div className="form-group">
             <label htmlFor="restaurantName">Restaurant Name:</label>
-            <input type="text" className="form-control" id="restaurantName"/>
+            <input type="text" className="form-control" id="restaurantName" onChange={this.handleChange}/>
           </div>
           <div className="form-group row">
             <label htmlFor="date-input" className="col-2 col-form-label">Date</label>
             <div className="col-10">
-              <input className="form-control" type="date" value={Date(document.isDefaultNamespace.date)} id="date-input"/>
+              <input className="form-control" type="date" onChange={this.handleChange} value={Date(document.isDefaultNamespace.date) } id="date-input"/>
             </div>
           </div>
           <button type="submit" className="btn btn-primary btn-lg">Next</button>
