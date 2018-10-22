@@ -1,0 +1,54 @@
+{
+  "name": "split-it",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Check splitter",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.html": [
+      "htmlhint"
+    ],
+    "*.css": [
+      "stylelint --fix",
+      "git add"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "5.3.0",
+    "eslint-config-standard": "11.0.0",
+    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-node": "7.0.1",
+    "eslint-plugin-promise": "3.8.0",
+    "eslint-plugin-react": "7.10.0",
+    "eslint-plugin-standard": "3.1.0",
+    "htmlhint": "0.9.13",
+    "husky": "1.0.0-rc.13",
+    "lint-staged": "7.2.2",
+    "stylelint": "9.4.0",
+    "stylelint-config-standard": "18.2.0"
+  },
+  "main": "index.js",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariozone/split-it.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ariozone/split-it/issues"
+  },
+  "homepage": "https://github.com/ariozone/split-it#readme"
+}
