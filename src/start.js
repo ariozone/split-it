@@ -4,15 +4,33 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 0,
-      restaurant: ''
+      restaurant: '',
+      date: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleChange() {
-
+  handleChange(e) {
+    if (e.target.id === 'seats') {
+      this.setState({
+        seats: e.target.value
+      })
+    }
+    if (e.target.id === 'restaurantName') {
+      this.setState({
+        restaurant: e.target.value
+      })
+    }
+    if (e.target.id === 'date-input') {
+      this.setState({
+        date: e.target.value
+      })
+    }
   }
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault()
+    const {seats, restaurant, date} = this.state
+    this.props.onSubmit({seats, restaurant, date})
 
   }
   render() {
@@ -22,7 +40,6 @@ export default class Start extends React.Component {
         <form className="mx-auto" onSubmit={this.handleSubmit}>
           <div className="form-group col-8">
             <select className="form-control m-5" id="seats" onChange={this.handleChange}>
-              <option value="0">0</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
@@ -44,13 +61,23 @@ export default class Start extends React.Component {
               <option value="20">20</option>
             </select></div>
           <div className="form-group">
-            <label htmlFor="restaurantName">Restaurant Name:</label>
-            <input type="text" className="form-control" id="restaurantName" onChange={this.handleChange}/>
+            <label
+              htmlFor="restaurantName">Restaurant Name:</label>
+            <input
+              type="text"
+              className="form-control" id="restaurantName" value={this.state.restaurant}
+              onChange={this.handleChange}/>
           </div>
           <div className="form-group row">
-            <label htmlFor="date-input" className="col-2 col-form-label">Date</label>
+            <label
+              htmlFor="date-input"
+              className="col-2 col-form-label">Date</label>
             <div className="col-10">
-              <input className="form-control" type="date" onChange={this.handleChange} value={Date(document.isDefaultNamespace.date) } id="date-input"/>
+              <input
+                className="form-control"
+                type="date"
+                onChange={this.handleChange}
+                value={this.state.date} id="date-input"/>
             </div>
           </div>
           <button type="submit" className="btn btn-primary btn-lg">Next</button>
