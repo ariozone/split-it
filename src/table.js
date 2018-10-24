@@ -3,12 +3,14 @@ import React from 'react'
 export default class Table extends React.Component {
   render() {
     return (
-      <div className="container-fluid">
-        {
-          createSeats(this.props.seats).map(number => {
-            return <div key={number} className="circle"></div>
-          })
-        }
+      <div className="container">
+        <div className="table">
+          {
+            createSeats(this.props.seats).map(number => {
+              return <div key={number} className="circle"></div>
+            })
+          }
+        </div>
       </div>
 
     )
