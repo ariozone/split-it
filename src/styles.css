@@ -2,7 +2,43 @@ body {
   padding: 0;
 }
 
-/* #seats {
-  background-color: rgba(42, 42, 65, 0.089);
+#seats,
+#date-input,
+#restaurantName {
+  background-color: gray;
+
+  /* background-color: rgba(42, 42, 65, 0.089); */
   border: none;
+}
+
+.container {
+  text-align: center;
+
+  /* vertical-align: middle; */
+}
+
+/* .rectangle {
+  background-color: gray;
+  width: 5rem;
+  color: white;
+  height: 5rem;
+  display: table;
+  margin: auto;
 } */
+
+.circle {
+  background: rgb(120, 118, 126);
+  border-radius: 50%;
+  color: white;
+  height: 5rem;
+  font-weight: bold;
+  width: 5rem;
+  display: inline-block;
+  margin: 2%;
+  overflow: auto;
+  position: relative;
+}
+
+.circle p {
+  vertical-align: middle;
+}

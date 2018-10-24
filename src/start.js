@@ -3,7 +3,7 @@ export default class Start extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      seats: 0,
+      seats: 2,
       restaurant: '',
       date: ''
     }
@@ -31,15 +31,15 @@ export default class Start extends React.Component {
     e.preventDefault()
     const {seats, restaurant, date} = this.state
     this.props.onSubmit({seats, restaurant, date})
-
   }
   render() {
     return (
       <div className="container-fluid pt-5">
-        <h1 className="text-center mx-auto mt-5">How many people?</h1>
+        <h1 className="text-center mx-auto my-5">Create Table</h1>
         <form className="mx-auto" onSubmit={this.handleSubmit}>
-          <div className="form-group col-8">
-            <select className="form-control m-5" id="seats" onChange={this.handleChange}>
+          <div className="form-group mx-5">
+            <label htmlFor="seats">Number of Seats</label>
+            <select className="form-control" id="seats" onChange={this.handleChange}>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
@@ -60,7 +60,7 @@ export default class Start extends React.Component {
               <option value="19">19</option>
               <option value="20">20</option>
             </select></div>
-          <div className="form-group">
+          <div className="form-group mx-5">
             <label
               htmlFor="restaurantName">Restaurant Name:</label>
             <input
@@ -68,19 +68,17 @@ export default class Start extends React.Component {
               className="form-control" id="restaurantName" value={this.state.restaurant}
               onChange={this.handleChange}/>
           </div>
-          <div className="form-group row">
+          <div className="form-group mx-5">
             <label
               htmlFor="date-input"
-              className="col-2 col-form-label">Date</label>
-            <div className="col-10">
-              <input
-                className="form-control"
-                type="date"
-                onChange={this.handleChange}
-                value={this.state.date} id="date-input"/>
-            </div>
+              className="form-label">Date</label>
+            <input
+              className="form-control"
+              type="date"
+              onChange={this.handleChange}
+              value={this.state.date} id="date-input"/>
+            <button type="submit" className="btn btn-primary btn-lg btn-block my-5">Next</button>
           </div>
-          <button type="submit" className="btn btn-primary btn-lg">Next</button>
         </form>
       </div>
     )
