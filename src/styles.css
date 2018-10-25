@@ -9,10 +9,6 @@ body {
   border: none;
 }
 
-.table {
-  height: 60%;
-}
-
 .circle {
   background: rgb(120, 118, 126);
   border-radius: 50%;
