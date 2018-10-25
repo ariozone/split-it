@@ -3,7 +3,7 @@ import React from 'react'
 export default class Table extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div className="container text-center">
         <div className="table">
           {
             createSeats(this.props.seats).map(number => {
