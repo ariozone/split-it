@@ -1,0 +1,27 @@
+body {
+  padding: 0;
+}
+
+#seats,
+#date-input,
+#restaurantName {
+  background-color: gray;
+  border: none;
+}
+
+.circle {
+  background: rgb(120, 118, 126);
+  border-radius: 50%;
+  color: white;
+  height: 5rem;
+  font-weight: bold;
+  width: 5rem;
+  display: inline-block;
+  margin: 2%;
+  overflow: auto;
+  position: relative;
+}
+
+.circle p {
+  vertical-align: middle;
+}
