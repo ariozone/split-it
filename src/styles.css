@@ -4,7 +4,8 @@ body {
 
 #seats,
 #date-input,
-#restaurantName {
+#restaurantName,
+#name-input {
   background-color: gray;
   border: none;
 }
@@ -13,13 +14,16 @@ body {
   background: rgb(120, 118, 126);
   border-radius: 50%;
   color: white;
-  height: 5rem;
+  height: 7rem;
   font-weight: bold;
-  width: 5rem;
+  width: 7rem;
   display: inline-block;
   margin: 2%;
   overflow: auto;
   position: relative;
+  border: none;
+  outline: none !important;
+  box-shadow: none;
 }
 
 .circle p {
