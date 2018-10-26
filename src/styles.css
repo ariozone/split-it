@@ -16,9 +16,10 @@ body {
   color: white;
   height: 7rem;
   font-weight: bold;
+  float: center;
   width: 7rem;
   display: inline-block;
-  margin: 2%;
+  margin: 3%;
   overflow: auto;
   position: relative;
   border: none;
