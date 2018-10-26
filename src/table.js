@@ -6,36 +6,43 @@ export default class Table extends React.Component {
     super(props)
     this.state = {
       modal: false,
-      seats: {
-        name: '',
-        id: ''
-      }
+      name: '',
+      selectedSeat: null
     }
-    this.toggle = this.toggle.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
-  toggle() {
+  selectSeat(seat) {
     this.setState({
-      modal: !this.state.modal
+      modal: true,
+      selectedSeat: seat
     })
+  }
+  handleChange(e) {
+    this.setState({name: e.targe.value})
+  }
+  handleSubmit(e) {
+    e.preventDefault()
+    const {name, selectedSeat} = this.state
+    this.props.onSubmit({name: name, id: selectedSeat.id})
+    this.setState({modal: false, name: '', selectedSeat: null})
   }
   render() {
     return (
       <div className="container">
         <div className="table">
-          <button className="circle" type="button" onClick={this.toggle} ><p>You</p></button>
           {
-            createSeats(this.props.seats).map(number => {
-              return <button key={number} className="circle" type="button" onClick={this.toggle} ><p>{this.state.seats.name}</p></button>
+            this.props.seats.map(seat => {
+              return <button key={seat.id} className="circle" type="button" onClick={() => this.selectSeat(seat)} ><p>{seat.name}</p></button>
             })
           }
-          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <Modal isOpen={this.state.modal} className={this.props.className}>
             <ModalHeader>
               <Form inline onSubmit={this.handleSubmit}>
                 <FormGroup>
                   <Label for="name-input">Name:</Label>
-                  <Input type="text" name="name" id="name-input" placeholder="Name" />
+                  <Input type="text" name="name" id="name-input" placeholder="Name" onChange={this.handleChange}/>
                 </FormGroup>
-                {/* {' '} */}
                 <Button>Add</Button>
               </Form>
             </ModalHeader>
@@ -50,12 +57,4 @@ export default class Table extends React.Component {
       </div>
     )
   }
-}
-
-function createSeats(number) {
-  const array = []
-  for (let i = 2; i <= number; i++) {
-    array.push(i)
-  }
-  return array
 }

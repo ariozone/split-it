@@ -10,7 +10,10 @@ export default class App extends Component {
     }
     this.createTable = this.createTable.bind(this)
   }
-
+  update() {
+  // compare id with selected seat id
+  // if match update the name with selected seat's name
+  }
   createTable(table) {
     this.setState({table, view: 'table'})
   }

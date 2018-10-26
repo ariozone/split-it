@@ -30,7 +30,7 @@ export default class Start extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const {seats, restaurant, date} = this.state
-    this.props.onSubmit({seats, restaurant, date})
+    this.props.onSubmit({seats: createSeats(seats), restaurant, date})
   }
   render() {
     return (
@@ -83,4 +83,11 @@ export default class Start extends React.Component {
       </div>
     )
   }
+}
+function createSeats(number) {
+  const array = []
+  for (let i = 2; i <= number; i++) {
+    array.push({name: '', id: i - 1})
+  }
+  return array
 }
