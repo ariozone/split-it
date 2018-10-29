@@ -52,7 +52,7 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h3>{this.props.event}</h3></div>
+          <div className="text-muted"><h3>{this.props.event} on {this.props.date}</h3></div>
 
           {this.props.seats.map(seat => {
             return (
