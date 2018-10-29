@@ -15,7 +15,7 @@ export default class Table extends React.Component {
     super(props)
     this.state = {
       modal: false,
-      name: '',
+      name: ' ',
       action: 'Add',
       selectedSeat: null
     }
@@ -33,12 +33,8 @@ export default class Table extends React.Component {
       modal: true,
       selectedSeat: seat,
       name: seat.name,
-      action: !this.state.name ? 'Add' : 'Edit'
+      action: !seat.name ? 'Add' : 'Edit'
     })
-    //   if (!this.state.name) {
-    //     this.setState({ action: 'Add' })
-    //   }
-    //   else this.setState({ action: 'Edit' })
   }
 
   handleChange(e) {
