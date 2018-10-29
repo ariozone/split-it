@@ -6,6 +6,8 @@ body {
 #date-input,
 #eventName,
 #subtotal,
+#tax-input,
+#quantity,
 #name-input {
   background-color: gray;
   color: white;

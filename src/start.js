@@ -4,7 +4,9 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
-      subTotal: 0.00,
+      subTotal: '',
+      tax: '',
+      quantity: '',
       event: '',
       date: ''
     }
@@ -35,8 +37,8 @@ export default class Start extends React.Component {
   }
   render() {
     return (
-      <div className="container-fluid pt-5 text-center">
-        <h1 className="text-center mx-auto my-5">Create Table</h1>
+      <div className="container-fluid pt-3 text-center">
+        <h1 className="text-center mx-auto my-2">Create Table</h1>
         <form className="mx-auto" onSubmit={this.handleSubmit}>
           <div className="form-group mx-5">
             <label htmlFor="seats">Number of Seats</label>
@@ -61,10 +63,11 @@ export default class Start extends React.Component {
               <option value="19">19</option>
               <option value="20">20</option>
             </select></div>
+
           <div className="form-group mx-5">
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
-            <div className="input-group mb-3">
+            <div className="input-group">
               <div className="input-group-prepend">
                 <span className="input-group-text">$</span>
               </div>
@@ -75,12 +78,25 @@ export default class Start extends React.Component {
           </div>
           <div className="form-group mx-5">
             <label
+              htmlFor="tax-input">Bill Tax:</label>
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">$</span>
+              </div>
+              <input
+                type="text"
+                className="form-control" aria-label="Amount" id="tax-input" value={this.state.tax}
+                onChange={this.handleChange} /></div>
+          </div>
+          <div className="form-group mx-5">
+            <label
               htmlFor="eventName">Name of Restaurant or Event:</label>
             <input
               type="text"
               className="form-control" id="eventName" value={this.state.event}
               onChange={this.handleChange} />
           </div>
+
           <div className="form-group mx-5">
             <label
               htmlFor="date-input"
@@ -90,7 +106,7 @@ export default class Start extends React.Component {
               type="date"
               onChange={this.handleChange}
               value={this.state.date} id="date-input" />
-            <button type="submit" className="btn btn-primary btn-lg btn-block my-5">Next</button>
+            <button type="submit" className="btn btn-primary btn-lg btn-block mt-5">Next</button>
           </div>
         </form>
       </div>
