@@ -29,8 +29,8 @@ export default class Start extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    const {seats, restaurant, date} = this.state
-    this.props.onSubmit({seats: createSeats(seats), restaurant, date})
+    const { seats, restaurant, date } = this.state
+    this.props.onSubmit({ seats: createSeats(seats), restaurant, date })
   }
   render() {
     return (
@@ -66,7 +66,7 @@ export default class Start extends React.Component {
             <input
               type="text"
               className="form-control" id="restaurantName" value={this.state.restaurant}
-              onChange={this.handleChange}/>
+              onChange={this.handleChange} />
           </div>
           <div className="form-group mx-5">
             <label
@@ -76,7 +76,7 @@ export default class Start extends React.Component {
               className="form-control"
               type="date"
               onChange={this.handleChange}
-              value={this.state.date} id="date-input"/>
+              value={this.state.date} id="date-input" />
             <button type="submit" className="btn btn-primary btn-lg btn-block my-5">Next</button>
           </div>
         </form>
@@ -86,8 +86,8 @@ export default class Start extends React.Component {
 }
 function createSeats(number) {
   const array = []
-  for (let i = 2; i <= number; i++) {
-    array.push({name: '', id: i - 1})
+  for (let i = 1; i <= number; i++) {
+    array.push({ name: '', id: i - 1 })
   }
   return array
 }

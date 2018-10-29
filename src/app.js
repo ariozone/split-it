@@ -1,4 +1,4 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 import Start from './start'
 import Table from './table'
 export default class App extends Component {
@@ -9,20 +9,28 @@ export default class App extends Component {
       view: 'start'
     }
     this.createTable = this.createTable.bind(this)
+    this.updateName = this.updateName.bind(this)
   }
-  update() {
-  // compare id with selected seat id
-  // if match update the name with selected seat's name
+
+  updateName(selectedSeat) {
+    this.state.table.seats.map(seat => {
+      if (seat.id === selectedSeat.id) {
+        seat.name = selectedSeat.name
+      }
+      return seat
+    })
   }
   createTable(table) {
-    this.setState({table, view: 'table'})
+    this.setState({ table, view: 'table' })
   }
   renderView() {
     if (this.state.view === 'start') {
-      return <Start onSubmit={this.createTable}/>
+      return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table seats={this.state.table.seats}/>
+      return this.state.table && <Table seats={this.state.table.seats}
+        onSubmit={this.updateName}
+      />
     }
   }
 
