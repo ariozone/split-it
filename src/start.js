@@ -62,7 +62,7 @@ export default class Start extends React.Component {
             </select></div>
           <div className="form-group mx-5">
             <label
-              htmlFor="restaurantName">Restaurant Name:</label>
+              htmlFor="restaurantName">Name of Restaurant or Event:</label>
             <input
               type="text"
               className="form-control" id="restaurantName" value={this.state.restaurant}
