@@ -32,8 +32,8 @@ export default class Start extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    const { seats, event, date } = this.state
-    this.props.onSubmit({ seats: createSeats(seats), event, date })
+    const { seats, event, date, tax, subTotal, quantity } = this.state
+    this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal })
   }
   render() {
     return (
@@ -97,7 +97,6 @@ export default class Start extends React.Component {
                 className="form-control" id="quantity" value={this.state.quantity}
                 onChange={this.handleChange} /></div>
           </div>
-
           <div className="form-group mx-5">
             <label
               htmlFor="eventName">Name of Restaurant or Event:</label>
