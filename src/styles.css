@@ -5,6 +5,7 @@ body {
 #seats,
 #date-input,
 #eventName,
+#subtotal,
 #name-input {
   background-color: gray;
   color: white;

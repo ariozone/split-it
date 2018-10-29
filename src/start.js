@@ -4,6 +4,7 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
+      subTotal: 0.00,
       event: '',
       date: ''
     }
@@ -60,6 +61,18 @@ export default class Start extends React.Component {
               <option value="19">19</option>
               <option value="20">20</option>
             </select></div>
+          <div className="form-group mx-5">
+            <label
+              htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text">$</span>
+              </div>
+              <input
+                type="text"
+                className="form-control" aria-label="Amount" id="subtotal" value={this.state.subTotal}
+                onChange={this.handleChange} /></div>
+          </div>
           <div className="form-group mx-5">
             <label
               htmlFor="eventName">Name of Restaurant or Event:</label>
