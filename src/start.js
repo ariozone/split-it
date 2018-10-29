@@ -4,7 +4,7 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
-      restaurant: '',
+      event: '',
       date: ''
     }
     this.handleChange = this.handleChange.bind(this)
@@ -16,9 +16,9 @@ export default class Start extends React.Component {
         seats: e.target.value
       })
     }
-    if (e.target.id === 'restaurantName') {
+    if (e.target.id === 'eventName') {
       this.setState({
-        restaurant: e.target.value
+        event: e.target.value
       })
     }
     if (e.target.id === 'date-input') {
@@ -29,8 +29,8 @@ export default class Start extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    const { seats, restaurant, date } = this.state
-    this.props.onSubmit({ seats: createSeats(seats), restaurant, date })
+    const { seats, event, date } = this.state
+    this.props.onSubmit({ seats: createSeats(seats), event, date })
   }
   render() {
     return (
@@ -62,10 +62,10 @@ export default class Start extends React.Component {
             </select></div>
           <div className="form-group mx-5">
             <label
-              htmlFor="restaurantName">Name of Restaurant or Event:</label>
+              htmlFor="eventName">Name of Restaurant or Event:</label>
             <input
               type="text"
-              className="form-control" id="restaurantName" value={this.state.restaurant}
+              className="form-control" id="eventName" value={this.state.event}
               onChange={this.handleChange} />
           </div>
           <div className="form-group mx-5">
