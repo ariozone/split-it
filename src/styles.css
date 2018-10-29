@@ -4,7 +4,7 @@ body {
 
 #seats,
 #date-input,
-#restaurantName,
+#eventName,
 #name-input {
   background-color: gray;
   color: white;

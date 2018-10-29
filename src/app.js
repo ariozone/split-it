@@ -28,7 +28,7 @@ export default class App extends Component {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table seats={this.state.table.seats}
+      return this.state.table && <Table seats={this.state.table.seats} event={this.state.table.event} date={this.state.table.date}
         onSubmit={this.updateName}
       />
     }
