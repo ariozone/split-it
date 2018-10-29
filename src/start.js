@@ -90,6 +90,16 @@ export default class Start extends React.Component {
           </div>
           <div className="form-group mx-5">
             <label
+              htmlFor="quantity">Quantity of Ordered Items:</label>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control" id="quantity" value={this.state.quantity}
+                onChange={this.handleChange} /></div>
+          </div>
+
+          <div className="form-group mx-5">
+            <label
               htmlFor="eventName">Name of Restaurant or Event:</label>
             <input
               type="text"
