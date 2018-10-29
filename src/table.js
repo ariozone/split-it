@@ -7,7 +7,7 @@ import {
   ModalFooter,
   Form,
   FormGroup,
-  Input
+  InputGroup
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -67,22 +67,20 @@ export default class Table extends React.Component {
           <Modal isOpen={this.state.modal} className={this.props.className}>
             <ModalHeader>
               <Form inline onSubmit={this.handleSubmit}>
-                <FormGroup className="mb-0 mr-sm-2 mb-sm-0">
-                  <Input
+                <FormGroup>
+                  <InputGroup><input id="name-input"
                     type="text"
                     name="name"
-                    id="name-input"
                     placeholder="Name"
                     value={this.state.name}
-                    onChange={this.handleChange}
-                  />
+                    onChange={this.handleChange}>
+                  </input><Button>{this.state.action} Name</Button>
+                  </InputGroup>
                 </FormGroup>
-                {' '}
-                <Button>{this.state.action} Name</Button>
               </Form>
             </ModalHeader>
-            <ModalBody>ordered item goes here!</ModalBody>
-            <ModalFooter>total amount goes here: $
+            <ModalBody></ModalBody>
+            <ModalFooter>
               <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
