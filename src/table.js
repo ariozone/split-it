@@ -7,8 +7,7 @@ import {
   ModalFooter,
   Form,
   FormGroup,
-  Input,
-  Label
+  Input
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -17,16 +16,29 @@ export default class Table extends React.Component {
     this.state = {
       modal: false,
       name: '',
+      action: 'Add',
       selectedSeat: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
+
+  closeModal() {
+    this.setState({ modal: false })
+  }
+
   selectSeat(seat) {
     this.setState({
       modal: true,
-      selectedSeat: seat
+      selectedSeat: seat,
+      name: seat.name,
+      action: !this.state.name ? 'Add' : 'Edit'
     })
+    //   if (!this.state.name) {
+    //     this.setState({ action: 'Add' })
+    //   }
+    //   else this.setState({ action: 'Edit' })
   }
 
   handleChange(e) {
@@ -37,7 +49,7 @@ export default class Table extends React.Component {
     e.preventDefault()
     const { name, selectedSeat } = this.state
     this.props.onSubmit({ name: name, id: selectedSeat.id })
-    this.setState({ modal: false, name: '', selectedSeat: null })
+    this.setState({ modal: false, action: 'Add', name: '', selectedSeat: null })
   }
 
   render() {
@@ -59,21 +71,24 @@ export default class Table extends React.Component {
           <Modal isOpen={this.state.modal} className={this.props.className}>
             <ModalHeader>
               <Form inline onSubmit={this.handleSubmit}>
-                <FormGroup>
-                  <Label for="name-input">Name:</Label>
+                <FormGroup className="mb-0 mr-sm-2 mb-sm-0">
                   <Input
                     type="text"
                     name="name"
                     id="name-input"
                     placeholder="Name"
+                    value={this.state.name}
                     onChange={this.handleChange}
                   />
                 </FormGroup>
-                <Button>Add</Button>
+                {' '}
+                <Button>{this.state.action} Name</Button>
               </Form>
             </ModalHeader>
             <ModalBody>ordered item goes here!</ModalBody>
-            <ModalFooter>total amount goes here: $</ModalFooter>
+            <ModalFooter>total amount goes here: $
+              <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
+            </ModalFooter>
           </Modal>
         </div>
       </div>
