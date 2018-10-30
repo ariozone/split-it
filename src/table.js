@@ -9,8 +9,7 @@ import {
   FormGroup,
   InputGroup,
   Card,
-  CardTitle,
-  CardText
+  CardTitle
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -55,7 +54,7 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>{this.props.event} Date: {this.props.date}</h6></div>
+          <div className="text-muted"><h6>Date: {this.props.date} {this.props.event}</h6></div>
 
           {this.props.seats.map(seat => {
             return (
@@ -91,9 +90,10 @@ export default class Table extends React.Component {
           </Modal>
           <div>
             <Card body inverse className="text-center mt-5 mx-5">
-              <CardTitle>Bill Total: ${this.props.subTotal}</CardTitle>
-              <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-              <Button>Button</Button></Card></div>
+              <CardTitle>Quantity: {this.props.quantity}</CardTitle>
+              <CardTitle>Bill Total:</CardTitle>
+              <CardTitle>${(parseFloat(this.props.subtotal) + (parseFloat(this.props.tax)))}</CardTitle>
+            </Card></div>
         </div>
       </div>
     )

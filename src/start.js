@@ -7,12 +7,13 @@ export default class Start extends React.Component {
       seats: 2,
       subTotal: 0,
       tax: 0,
-      quantity: 0,
+      quantity: '',
       event: '',
       date: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
   handleChange(e) {
     switch (e.target.id) {
@@ -48,6 +49,9 @@ export default class Start extends React.Component {
         break
 
     }
+  }
+  handleClick(e) {
+    this.setState({ quantity: e.target.value })
   }
   handleSubmit(e) {
     e.preventDefault()
@@ -88,31 +92,33 @@ export default class Start extends React.Component {
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
               <CurrencyInput precision="2"
-                prefix="$"
-                type="text"
                 className="form-control"
                 aria-label="Amount"
                 id="subtotal"
                 value={this.state.subTotal}
-                onChange={this.handleChange} /></div>
+                onChangeEvent={this.handleChange}
+              />
+            </div>
           </div>
           <div className="form-group mx-5">
             <label
               htmlFor="tax-input">Bill Tax:</label>
             <div className="input-group">
               <CurrencyInput precision="2"
-                prefix="$"
-                type="text"
-                className="form-control" aria-label="Amount" id="tax-input" value={this.state.tax}
-                onChange={this.handleChange} /></div>
+                className="form-control"
+                aria-label="Amount"
+                id="tax-input"
+                value={this.state.tax}
+                onChangeEvent={this.handleChange}
+              />
+            </div>
           </div>
           <div className="form-group mx-5">
             <label
               htmlFor="quantity">Quantity of Ordered Items:</label>
             <div className="input-group">
-              <input
-                type="text"
-                className="form-control" id="quantity" value={this.state.quantity}
+              <input type="number" className="form-control"
+                id="quantity" value={this.state.quantity}
                 onChange={this.handleChange} /></div>
           </div>
           <div className="form-group mx-5">
