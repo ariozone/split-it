@@ -54,9 +54,9 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>Date: {this.props.date} Event:{this.props.event}</h6></div>
+          <div className="text-muted"><h6>Date: {this.props.table.date} Event:{this.props.table.event}</h6></div>
 
-          {this.props.seats.map(seat => {
+          {this.props.table.seats.map(seat => {
             return (
               <button
                 key={seat.id}
@@ -91,9 +91,9 @@ export default class Table extends React.Component {
         </div>
         <div id="card">
           <Card body inverse className="text-center">
-            <CardTitle>Quantity: {this.props.quantity}</CardTitle>
+            <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
             <CardTitle>Bill Total:</CardTitle>
-            <CardTitle>${(parseFloat(this.props.subtotal) + (parseFloat(this.props.tax)))}</CardTitle>
+            <CardTitle>${(parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax)))}</CardTitle>
           </Card></div>
       </div>
     )
