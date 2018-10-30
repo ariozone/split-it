@@ -1,4 +1,5 @@
 import React from 'react'
+import CurrencyInput from 'react-currency-input'
 export default class Start extends React.Component {
   constructor(props) {
     super(props)
@@ -86,22 +87,21 @@ export default class Start extends React.Component {
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">$</span>
-              </div>
-              <input
+              <CurrencyInput precision="2"
+                prefix="$"
                 type="text"
-                className="form-control" aria-label="Amount" id="subtotal" value={this.state.subTotal}
+                className="form-control"
+                aria-label="Amount"
+                id="subtotal"
+                value={this.state.subTotal}
                 onChange={this.handleChange} /></div>
           </div>
           <div className="form-group mx-5">
             <label
               htmlFor="tax-input">Bill Tax:</label>
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">$</span>
-              </div>
-              <input
+              <CurrencyInput precision="2"
+                prefix="$"
                 type="text"
                 className="form-control" aria-label="Amount" id="tax-input" value={this.state.tax}
                 onChange={this.handleChange} /></div>

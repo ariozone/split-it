@@ -7,7 +7,10 @@ import {
   ModalFooter,
   Form,
   FormGroup,
-  InputGroup
+  InputGroup,
+  Card,
+  CardTitle,
+  CardText
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -86,6 +89,11 @@ export default class Table extends React.Component {
               <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
+          <div>
+            <Card body inverse className="text-center mt-5 mx-5">
+              <CardTitle>Bill Total: ${this.props.subTotal}</CardTitle>
+              <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+              <Button>Button</Button></Card></div>
         </div>
       </div>
     )
