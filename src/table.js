@@ -24,6 +24,7 @@ export default class Table extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.splitEqually = this.splitEqually.bind(this)
   }
 
   closeModal() {
@@ -37,6 +38,10 @@ export default class Table extends React.Component {
       name: seat.name,
       action: !seat.name ? 'Add' : 'Edit'
     })
+  }
+
+  splitEqually(totalAmount) {
+
   }
 
   handleChange(e) {
@@ -94,7 +99,7 @@ export default class Table extends React.Component {
             <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
             <CardTitle>Bill Total:</CardTitle>
             <CardTitle>${(parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax)))}</CardTitle>
-            <Button>Split This Amount Equally</Button>
+            <Button onClick={this.splitEqually}>Split This Amount Equally</Button>
           </Card></div>
       </div>
     )
