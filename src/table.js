@@ -94,6 +94,7 @@ export default class Table extends React.Component {
             <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
             <CardTitle>Bill Total:</CardTitle>
             <CardTitle>${(parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax)))}</CardTitle>
+            <Button>Split This Amount Equally</Button>
           </Card></div>
       </div>
     )
