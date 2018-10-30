@@ -54,7 +54,7 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>Date: {this.props.date} {this.props.event}</h6></div>
+          <div className="text-muted"><h6>Date: {this.props.date} Event:{this.props.event}</h6></div>
 
           {this.props.seats.map(seat => {
             return (
@@ -88,13 +88,13 @@ export default class Table extends React.Component {
               <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
-          <div>
-            <Card body inverse className="text-center mt-5 mx-5">
-              <CardTitle>Quantity: {this.props.quantity}</CardTitle>
-              <CardTitle>Bill Total:</CardTitle>
-              <CardTitle>${(parseFloat(this.props.subtotal) + (parseFloat(this.props.tax)))}</CardTitle>
-            </Card></div>
         </div>
+        <div id="card">
+          <Card body inverse className="text-center">
+            <CardTitle>Quantity: {this.props.quantity}</CardTitle>
+            <CardTitle>Bill Total:</CardTitle>
+            <CardTitle>${(parseFloat(this.props.subtotal) + (parseFloat(this.props.tax)))}</CardTitle>
+          </Card></div>
       </div>
     )
   }
