@@ -4,9 +4,9 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
-      subTotal: '',
-      tax: '',
-      quantity: '',
+      subTotal: 0,
+      tax: 0,
+      quantity: 0,
       event: '',
       date: ''
     }
@@ -14,20 +14,38 @@ export default class Start extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(e) {
-    if (e.target.id === 'seats') {
-      this.setState({
-        seats: e.target.value
-      })
-    }
-    if (e.target.id === 'eventName') {
-      this.setState({
-        event: e.target.value
-      })
-    }
-    if (e.target.id === 'date-input') {
-      this.setState({
-        date: e.target.value
-      })
+    switch (e.target.id) {
+      case 'seats':
+        this.setState({
+          seats: e.target.value
+        })
+        break
+      case 'eventName':
+        this.setState({
+          event: e.target.value
+        })
+        break
+      case 'date-input':
+        this.setState({
+          date: e.target.value
+        })
+        break
+      case 'subtotal':
+        this.setState({
+          subTotal: e.target.value
+        })
+        break
+      case 'quantity':
+        this.setState({
+          quantity: e.target.value
+        })
+        break
+      case 'tax-input':
+        this.setState({
+          tax: e.target.value
+        })
+        break
+
     }
   }
   handleSubmit(e) {
