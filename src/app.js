@@ -23,14 +23,13 @@ export default class App extends Component {
   createTable(table) {
     this.setState({ table, view: 'table' })
   }
+
   renderView() {
     if (this.state.view === 'start') {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table seats={this.state.table.seats} event={this.state.table.event} date={this.state.table.date}
-        onSubmit={this.updateName}
-      />
+      return this.state.table && <Table table={this.state.table} />
     }
   }
 

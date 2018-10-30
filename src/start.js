@@ -1,34 +1,57 @@
 import React from 'react'
+import CurrencyInput from 'react-currency-input'
 export default class Start extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       seats: 2,
-      subTotal: '',
-      tax: '',
+      subTotal: 0,
+      tax: 0,
       quantity: '',
       event: '',
       date: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
   handleChange(e) {
-    if (e.target.id === 'seats') {
-      this.setState({
-        seats: e.target.value
-      })
+    switch (e.target.id) {
+      case 'seats':
+        this.setState({
+          seats: e.target.value
+        })
+        break
+      case 'eventName':
+        this.setState({
+          event: e.target.value
+        })
+        break
+      case 'date-input':
+        this.setState({
+          date: e.target.value
+        })
+        break
+      case 'subtotal':
+        this.setState({
+          subTotal: e.target.value
+        })
+        break
+      case 'quantity':
+        this.setState({
+          quantity: e.target.value
+        })
+        break
+      case 'tax-input':
+        this.setState({
+          tax: e.target.value
+        })
+        break
+
     }
-    if (e.target.id === 'eventName') {
-      this.setState({
-        event: e.target.value
-      })
-    }
-    if (e.target.id === 'date-input') {
-      this.setState({
-        date: e.target.value
-      })
-    }
+  }
+  handleClick(e) {
+    this.setState({ quantity: e.target.value })
   }
   handleSubmit(e) {
     e.preventDefault()
@@ -68,33 +91,34 @@ export default class Start extends React.Component {
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">$</span>
-              </div>
-              <input
-                type="text"
-                className="form-control" aria-label="Amount" id="subtotal" value={this.state.subTotal}
-                onChange={this.handleChange} /></div>
+              <CurrencyInput precision="2"
+                className="form-control"
+                aria-label="Amount"
+                id="subtotal"
+                value={this.state.subTotal}
+                onChangeEvent={this.handleChange}
+              />
+            </div>
           </div>
           <div className="form-group mx-5">
             <label
               htmlFor="tax-input">Bill Tax:</label>
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">$</span>
-              </div>
-              <input
-                type="text"
-                className="form-control" aria-label="Amount" id="tax-input" value={this.state.tax}
-                onChange={this.handleChange} /></div>
+              <CurrencyInput precision="2"
+                className="form-control"
+                aria-label="Amount"
+                id="tax-input"
+                value={this.state.tax}
+                onChangeEvent={this.handleChange}
+              />
+            </div>
           </div>
           <div className="form-group mx-5">
             <label
               htmlFor="quantity">Quantity of Ordered Items:</label>
             <div className="input-group">
-              <input
-                type="text"
-                className="form-control" id="quantity" value={this.state.quantity}
+              <input type="number" className="form-control"
+                id="quantity" value={this.state.quantity}
                 onChange={this.handleChange} /></div>
           </div>
           <div className="form-group mx-5">

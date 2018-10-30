@@ -7,7 +7,9 @@ import {
   ModalFooter,
   Form,
   FormGroup,
-  InputGroup
+  InputGroup,
+  Card,
+  CardTitle
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -52,9 +54,9 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>{this.props.event} Date: {this.props.date}</h6></div>
+          <div className="text-muted"><h6>Date: {this.props.table.date} Event:{this.props.table.event}</h6></div>
 
-          {this.props.seats.map(seat => {
+          {this.props.table.seats.map(seat => {
             return (
               <button
                 key={seat.id}
@@ -87,6 +89,12 @@ export default class Table extends React.Component {
             </ModalFooter>
           </Modal>
         </div>
+        <div id="card">
+          <Card body inverse className="text-center">
+            <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
+            <CardTitle>Bill Total:</CardTitle>
+            <CardTitle>${(parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax)))}</CardTitle>
+          </Card></div>
       </div>
     )
   }
