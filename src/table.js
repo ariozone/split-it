@@ -19,7 +19,8 @@ export default class Table extends React.Component {
       modal: false,
       name: ' ',
       action: 'Add',
-      selectedSeat: null
+      selectedSeat: null,
+      amount: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -40,8 +41,8 @@ export default class Table extends React.Component {
     })
   }
 
-  splitEqually(totalAmount) {
-
+  splitEqually() {
+    this.setState({ amount: (parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax))) / this.props.table.seats.length })
   }
 
   handleChange(e) {
@@ -59,7 +60,7 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>Date: {this.props.table.date} Event:{this.props.table.event}</h6></div>
+          <div className="text-muted"><h6>Date: {this.props.table.date} Event: {this.props.table.event}</h6></div>
 
           {this.props.table.seats.map(seat => {
             return (
@@ -70,6 +71,7 @@ export default class Table extends React.Component {
                 onClick={() => this.selectSeat(seat)}
               >
                 <p>{seat.name}</p>
+                <p>${this.state.amount}</p>
               </button>
             )
           })}

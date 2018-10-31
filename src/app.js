@@ -29,7 +29,7 @@ export default class App extends Component {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table table={this.state.table} />
+      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} />
     }
   }
 
