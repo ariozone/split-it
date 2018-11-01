@@ -20,7 +20,8 @@ export default class Table extends React.Component {
       modal: false,
       name: ' ',
       action: 'Add',
-      selectedSeat: null
+      selectedSeat: null,
+      amount: 0
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -37,7 +38,8 @@ export default class Table extends React.Component {
       modal: true,
       selectedSeat: seat,
       name: seat.name,
-      action: !seat.name ? 'Add' : 'Edit'
+      action: !seat.name ? 'Add' : 'Edit',
+      amount: seat.amount
     })
   }
 
@@ -88,7 +90,7 @@ export default class Table extends React.Component {
             </ModalHeader>
             <ModalBody></ModalBody>
             <ModalFooter>
-              Amount: ${} <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
+              <h6 className="mx-5">Amount: ${this.state.amount} </h6> <Button color="primary">Add Items</Button><Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>
