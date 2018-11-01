@@ -11,6 +11,7 @@ export default class AddItems extends React.Component {
       itemName: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(e) {
@@ -26,25 +27,32 @@ export default class AddItems extends React.Component {
         break
     }
   }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const { price, quantity, itemName } = this.state
+    this.props.onSubmit(price, quantity, itemName)
+  }
+
   render() {
     return (
-      <Form >
+      <Form onSubmit={this.handleSubmit}>
 
         <FormGroup>
           <Label for="price" >Item Price</Label>
-          <CurrencyInput precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value=" " />
+          <CurrencyInput precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value={this.state.price} />
         </FormGroup>
 
         <FormGroup>
           <Label for="quantity" >Number of Items</Label>
-          <Input type="number" name="quantity" id="quantity" onChangeEvent={this.handleChange} />
+          <Input type="number" name="quantity" id="quantity" onChange={this.handleChange} value={this.state.quantity} />
         </FormGroup>
 
         <FormGroup>
           <Label for="item">Orderd Item</Label>
-          <Input type="text" name="item" id="item-input" placeholder="Pizza" onChangeEvent={this.handleChange} />
+          <Input type="text" name="item" id="item-input" placeholder="Pizza" onChange={this.handleChange} value={this.state.itemName} />
         </FormGroup>
-        <Button color="primary">Add Item</Button>{' '}<Button color="secondary"> Cancel</Button>
+        <Button type="submit" color="primary">Add Item</Button>{' '}<Button color="secondary"> Cancel</Button>
       </Form >
     )
   }
