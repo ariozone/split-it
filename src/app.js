@@ -22,12 +22,22 @@ export default class App extends Component {
     })
   }
 
+  // splitEvenly() {
+  // //   const splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
+  // //   this.state.table.seats.map(seat => {
+  // //     seat.amount = splitAmount
+  // //   })
+  // //   this.setState({ Table })
+  // }
+
   splitEvenly() {
+    const { table } = this.state
     const splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
-    this.state.table.seats.map(seat => {
-      seat.amount = splitAmount
+    const seats = table.seats.map(seat => {
+      seat.amount = splitAmount.toFixed(2)
+      return seat
     })
-    this.setState({ Table })
+    this.setState({ table: Object.assign({}, table, { seats }) })
   }
 
   createTable(table) {

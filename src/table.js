@@ -85,9 +85,9 @@ export default class Table extends React.Component {
                 </FormGroup>
               </Form>
             </ModalHeader>
-            <ModalBody>Amount: ${this.state.splitAmount}</ModalBody>
+            <ModalBody></ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
+              Amount: ${} <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>
