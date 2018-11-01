@@ -9,7 +9,8 @@ import {
   FormGroup,
   InputGroup,
   Card,
-  CardTitle
+  CardTitle,
+  CardText
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -94,9 +95,10 @@ export default class Table extends React.Component {
         <div id="card">
           <Card body inverse className="text-center">
             <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
-            <CardTitle>Bill Total:</CardTitle>
-            <CardTitle>${(parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax)))}</CardTitle>
-            <Button onClick={this.props.splitEqually}>Split This Amount Equally</Button>
+            <CardText>Tax: {this.props.table.subTotal ? 100 * (parseFloat(this.props.table.tax)) / (parseFloat(this.props.table.subTotal)).toFixed(2)
+              : 0}%</CardText>
+            <CardText></CardText>
+            <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
           </Card></div>
       </div>
     )
