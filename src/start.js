@@ -13,7 +13,6 @@ export default class Start extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleClick = this.handleClick.bind(this)
   }
   handleChange(e) {
     switch (e.target.id) {
@@ -50,9 +49,7 @@ export default class Start extends React.Component {
 
     }
   }
-  handleClick(e) {
-    this.setState({ quantity: e.target.value })
-  }
+
   handleSubmit(e) {
     e.preventDefault()
     const { seats, event, date, tax, subTotal, quantity } = this.state
@@ -100,6 +97,7 @@ export default class Start extends React.Component {
               />
             </div>
           </div>
+
           <div className="form-group mx-5">
             <label
               htmlFor="tax-input">Bill Tax:</label>
@@ -113,6 +111,7 @@ export default class Start extends React.Component {
               />
             </div>
           </div>
+
           <div className="form-group mx-5">
             <label
               htmlFor="quantity">Quantity of Ordered Items:</label>
@@ -121,6 +120,7 @@ export default class Start extends React.Component {
                 id="quantity" value={this.state.quantity}
                 onChange={this.handleChange} /></div>
           </div>
+
           <div className="form-group mx-5">
             <label
               htmlFor="eventName">Name of Restaurant or Event:</label>
@@ -139,7 +139,9 @@ export default class Start extends React.Component {
               type="date"
               onChange={this.handleChange}
               value={this.state.date} id="date-input" />
+
             <button type="submit" className="btn btn-primary btn-lg btn-block mt-5">Next</button>
+
           </div>
         </form>
       </div>
@@ -149,7 +151,7 @@ export default class Start extends React.Component {
 function createSeats(number) {
   const array = []
   for (let i = 1; i <= number; i++) {
-    array.push({ name: '', id: i - 1 })
+    array.push({ name: '', amount: 0, id: i - 1 })
   }
   return array
 }

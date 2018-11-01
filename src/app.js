@@ -10,6 +10,7 @@ export default class App extends Component {
     }
     this.createTable = this.createTable.bind(this)
     this.updateName = this.updateName.bind(this)
+    this.splitEvenly = this.splitEvenly.bind(this)
   }
 
   updateName(selectedSeat) {
@@ -20,6 +21,25 @@ export default class App extends Component {
       return seat
     })
   }
+
+  // splitEvenly() {
+  // //   const splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
+  // //   this.state.table.seats.map(seat => {
+  // //     seat.amount = splitAmount
+  // //   })
+  // //   this.setState({ Table })
+  // }
+
+  splitEvenly() {
+    const { table } = this.state
+    const splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
+    const seats = table.seats.map(seat => {
+      seat.amount = splitAmount.toFixed(2)
+      return seat
+    })
+    this.setState({ table: Object.assign({}, table, { seats }) })
+  }
+
   createTable(table) {
     this.setState({ table, view: 'table' })
   }
@@ -29,7 +49,7 @@ export default class App extends Component {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table table={this.state.table} />
+      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} />
     }
   }
 

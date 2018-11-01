@@ -21,6 +21,7 @@ export default class Table extends React.Component {
       action: 'Add',
       selectedSeat: null
     }
+
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -54,7 +55,7 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>Date: {this.props.table.date} Event:{this.props.table.event}</h6></div>
+          <div className="text-muted"><h6>Date: {this.props.table.date} Event: {this.props.table.event}</h6></div>
 
           {this.props.table.seats.map(seat => {
             return (
@@ -65,6 +66,7 @@ export default class Table extends React.Component {
                 onClick={() => this.selectSeat(seat)}
               >
                 <p>{seat.name}</p>
+                <p>${seat.amount}</p>
               </button>
             )
           })}
@@ -85,7 +87,7 @@ export default class Table extends React.Component {
             </ModalHeader>
             <ModalBody></ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
+              Amount: ${} <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>
@@ -94,6 +96,7 @@ export default class Table extends React.Component {
             <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
             <CardTitle>Bill Total:</CardTitle>
             <CardTitle>${(parseFloat(this.props.table.subTotal) + (parseFloat(this.props.table.tax)))}</CardTitle>
+            <Button onClick={this.props.splitEqually}>Split This Amount Equally</Button>
           </Card></div>
       </div>
     )
