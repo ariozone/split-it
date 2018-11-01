@@ -8,6 +8,8 @@ body {
 #subtotal,
 #tax-input,
 #quantity,
+#price,
+#item-input,
 #name-input {
   background-color: gray;
   color: white;

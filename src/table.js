@@ -109,7 +109,7 @@ export default class Table extends React.Component {
             <ModalFooter>
               <h6 className="mx-5">Amount: ${this.state.amount} </h6>
 
-              <Popover placement="top" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.addItems}>
+              <Popover className="w-10" placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.addItems}>
                 <PopoverHeader>Add Ordered Items</PopoverHeader>
                 <PopoverBody><AddItems /></PopoverBody>
               </Popover>

@@ -1,28 +1,51 @@
 import React from 'react'
-import { Form, FormGroup, Col, Row, Label, InputGroupAddon, Input, Button } from 'reactstrap'
+import CurrencyInput from 'react-currency-input'
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
 export default class AddItems extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      price: 0,
+      quantity: 0,
+      itemName: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(e) {
+    switch (e.target.id) {
+      case 'price':
+        this.setState({ price: e.target.value })
+        break
+      case 'quantity':
+        this.setState({ quantity: e.target.value })
+        break
+      case 'item-input':
+        this.setState({ itemName: e.target.value })
+        break
+    }
+  }
   render() {
     return (
-      <Form>
-        <Row form>
-          <Col md={9}>
-            <FormGroup>
-              <Label for="price" id="price">Item Price</Label>
-              <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-              <Input placeholder="Amount" type="number" step="1" />
-              <InputGroupAddon addonType="append">.00</InputGroupAddon></FormGroup></Col>
-          <Col md={3}>
-            <FormGroup>
-              <Input type="select" name="select" id="quantity" />
-            </FormGroup>
-          </Col></Row>
+      <Form >
+
+        <FormGroup>
+          <Label for="price" >Item Price</Label>
+          <CurrencyInput precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value=" " />
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="quantity" >Number of Items</Label>
+          <Input type="number" name="quantity" id="quantity" onChangeEvent={this.handleChange} />
+        </FormGroup>
+
         <FormGroup>
           <Label for="item">Orderd Item</Label>
-          <Input type="text" name="item" id="item-input" placeholder="Pizza" />
+          <Input type="text" name="item" id="item-input" placeholder="Pizza" onChangeEvent={this.handleChange} />
         </FormGroup>
-        <Button>Add</Button><Button>Cancel</Button>
-      </Form>
+        <Button color="primary">Add Item</Button>{' '}<Button color="secondary"> Cancel</Button>
+      </Form >
     )
   }
 }
