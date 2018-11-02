@@ -8,7 +8,7 @@ import {
   ModalFooter,
   Form,
   FormGroup,
-  InputGroup,
+  Input,
   Card,
   CardTitle,
   CardText,
@@ -90,21 +90,20 @@ export default class Table extends React.Component {
               </button>
             )
           })}
-          <Modal isOpen={this.state.modal} className={this.props.className}>
+          <Modal isOpen={this.state.modal} >
 
-            <ModalHeader>
+            <ModalHeader className="float-right p-1">
 
               <Form inline onSubmit={this.handleSubmit}>
-                <FormGroup>
-                  <InputGroup><input id="name-input"
+                <FormGroup className="w-90 mt-3 mx-1">
+                  <Input id="name-input"
                     type="text"
                     name="name"
                     placeholder="Name"
                     value={this.state.name}
                     onChange={this.handleChange}>
-                  </input><Button>{this.state.action} Name</Button>
-                  </InputGroup>
-                </FormGroup>
+                  </Input>
+                </FormGroup><Button className="">{this.state.action} Name</Button>
               </Form>
 
             </ModalHeader>
