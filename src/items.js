@@ -52,7 +52,7 @@ export default class AddItems extends React.Component {
           <Label for="item">Orderd Item</Label>
           <Input type="text" name="item" id="item-input" placeholder="Pizza" onChange={this.handleChange} value={this.state.itemName} />
         </FormGroup>
-        <Button type="submit" color="primary">Add Item</Button>{' '}<Button color="secondary"> Cancel</Button>
+        <Button type="submit" color="primary">Add Item</Button>{' '}<Button color="secondary" onClick={this.props.closePopover}> Cancel</Button>
       </Form >
     )
   }

@@ -32,11 +32,16 @@ export default class Table extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.closePopover = this.closePopover.bind(this)
     this.addItems = this.addItems.bind(this)
   }
 
   closeModal() {
     this.setState({ modal: false })
+  }
+
+  closePopover() {
+    this.setState({ popoverOpen: false })
   }
 
   selectSeat(seat) {
@@ -111,7 +116,7 @@ export default class Table extends React.Component {
 
               <Popover className="w-10" placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.addItems}>
                 <PopoverHeader>Add Ordered Items</PopoverHeader>
-                <PopoverBody><AddItems /></PopoverBody>
+                <PopoverBody><AddItems onSubmit={this.createList} closePopover={this.closePopover} /></PopoverBody>
               </Popover>
               <Button color="primary" id="Popover1"
                 onClick={this.addItems}>Add Items</Button> <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
