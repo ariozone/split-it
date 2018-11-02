@@ -31,7 +31,8 @@ export default class AddItems extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const { price, quantity, itemName } = this.state
-    this.props.onSubmit(price, quantity, itemName)
+    this.props.addItems({ price: price, quantity: quantity, itemName: itemName })
+    this.setState({ price: 0, quantity: 0, itemName: '' })
   }
 
   render() {
@@ -52,7 +53,9 @@ export default class AddItems extends React.Component {
           <Label for="item">Orderd Item</Label>
           <Input type="text" name="item" id="item-input" placeholder="Pizza" onChange={this.handleChange} value={this.state.itemName} />
         </FormGroup>
-        <Button type="submit" color="primary">Add Item</Button>{' '}<Button color="secondary" onClick={this.props.closePopover}> Cancel</Button>
+
+        <Button type="submit" color="primary">Add Item</Button>
+        <Button color="secondary" onClick={this.props.closePopover}> Cancel</Button>
       </Form >
     )
   }
