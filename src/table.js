@@ -11,10 +11,7 @@ import {
   Input,
   Card,
   CardTitle,
-  CardText,
-  Popover,
-  PopoverBody,
-  PopoverHeader
+  CardText
 } from 'reactstrap'
 
 export default class Table extends React.Component {
@@ -63,7 +60,6 @@ export default class Table extends React.Component {
     e.preventDefault()
     const { name, selectedSeat } = this.state
     this.props.onSubmit({ name: name, id: selectedSeat.id })
-    // this.setState({ modal: false, action: 'Add', name: '', selectedSeat: null })
   }
 
   togglePopover() {
@@ -72,7 +68,6 @@ export default class Table extends React.Component {
 
   addItems(item) {
     const { selectedSeat } = this.state
-    // this.setState({ popoverOpen: true, orderedItem: Object.assign({}, item) })
     this.props.addItems({ orderedItem: item, id: selectedSeat.id })
   }
 
@@ -91,7 +86,7 @@ export default class Table extends React.Component {
                 onClick={() => this.selectSeat(seat)}
               >
                 <p>{seat.name}</p>
-                <p>${seat.amount}</p>
+                <p>${parseFloat(seat.amount).toFixed(2)}</p>
               </button>
             )
           })}
@@ -108,24 +103,32 @@ export default class Table extends React.Component {
                     value={this.state.name}
                     onChange={this.handleChange}>
                   </Input>
-                </FormGroup><Button className="">{this.state.action} Name</Button>
+                </FormGroup><Button type="submit" className="">{this.state.action} Name</Button>
               </Form>
             </ModalHeader>
 
             <ModalBody>
+              <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
+
+                <ModalHeader className="float-right p-1">
+                  Add Ordered Items
+                </ModalHeader>
+
+                <ModalBody>
+                  <AddItems addItems={this.addItems} closePopover={this.closePopover} />
+                </ModalBody>
+
+                <ModalFooter>
+                </ModalFooter>
+              </Modal>
             </ModalBody>
 
             <ModalFooter>
-              <h6 className="mx-5">Amount: ${this.state.amount} </h6>
-
-              <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.togglePopover}>
-                <PopoverHeader>Add Ordered Items</PopoverHeader>
-                <PopoverBody><AddItems addItems={this.addItems} closePopover={this.closePopover} /></PopoverBody>
-              </Popover>
+              <h6 className="mx-5">Amount: ${parseFloat(this.state.amount).toFixed(2)} </h6>
 
               <Button color="primary" id="Popover1"
                 onClick={this.togglePopover}>Add Items</Button>
-              <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
+              <Button color="secondary" onClick={this.closeModal}>Done</Button>
             </ModalFooter>
           </Modal>
         </div>

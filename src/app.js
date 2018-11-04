@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Start from './start'
 import Table from './table'
-// import AddItems from './items'
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -26,9 +25,10 @@ export default class App extends Component {
 
   splitEvenly() {
     const { table } = this.state
-    const splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
+    let splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
     const seats = table.seats.map(seat => {
       seat.amount = splitAmount.toFixed(2)
+      splitAmount = 0
       return seat
     })
     this.setState({ table: Object.assign({}, table, { seats }) })
@@ -39,16 +39,20 @@ export default class App extends Component {
   }
 
   addItems(seatItems) {
-    console.log(seatItems)
     const { table } = this.state
     const itemsList = []
     itemsList.push(seatItems.orderedItem)
     const seats = table.seats.map(seat => {
       if (seat.id === seatItems.id) {
         seat.orderedList = seat.orderedList.concat(itemsList)
+        let amount = (parseInt(seatItems.orderedItem.quantity)) * (parseFloat(seatItems.orderedItem.price))
+        let seatAmount = parseFloat(seat.amount)
+        seatAmount += amount
+        seat.amount = seatAmount
       }
       return seat
     })
+
     this.setState({ table: Object.assign({}, table, { seats }) })
   }
 

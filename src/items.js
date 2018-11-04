@@ -41,7 +41,7 @@ export default class AddItems extends React.Component {
 
         <FormGroup>
           <Label for="price" >Item Price</Label>
-          <CurrencyInput precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value={this.state.price} />
+          <CurrencyInput className="form-control" precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value={this.state.price} />
         </FormGroup>
 
         <FormGroup>
@@ -55,7 +55,7 @@ export default class AddItems extends React.Component {
         </FormGroup>
 
         <Button type="submit" color="primary">Add Item</Button>
-        <Button color="secondary" onClick={this.props.closePopover}> Cancel</Button>
+        <Button color="secondary" onClick={this.props.closePopover}> Done</Button>
       </Form >
     )
   }
