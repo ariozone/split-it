@@ -148,10 +148,11 @@ export default class Start extends React.Component {
     )
   }
 }
+
 function createSeats(number) {
   const array = []
   for (let i = 1; i <= number; i++) {
-    array.push({ name: '', amount: 0, id: i - 1 })
+    array.push({ name: '', amount: 0, orderedList: [], id: i - 1 })
   }
   return array
 }
