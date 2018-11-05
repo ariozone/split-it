@@ -138,7 +138,8 @@ export default class Start extends React.Component {
               className="form-control"
               type="date"
               onChange={this.handleChange}
-              value={this.state.date} id="date-input" />
+              value={this.state.date} id="date-input"
+              placeholder={(new Date())} />
 
             <button type="submit" className="btn btn-primary btn-lg btn-block mt-5">Next</button>
 

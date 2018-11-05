@@ -12,6 +12,11 @@ export default class App extends Component {
     this.updateName = this.updateName.bind(this)
     this.splitEvenly = this.splitEvenly.bind(this)
     this.addItems = this.addItems.bind(this)
+    this.goBack = this.goBack.bind(this)
+  }
+
+  goBack() {
+    this.setState({ view: 'start' })
   }
 
   updateName(selectedSeat) {
@@ -61,7 +66,7 @@ export default class App extends Component {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} />
+      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} back={this.goBack} />
     }
   }
 

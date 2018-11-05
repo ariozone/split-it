@@ -75,7 +75,7 @@ export default class Table extends React.Component {
     return (
       <div className="container">
         <div className="table">
-          <div className="text-muted"><h6>Date: {this.props.table.date} Event: {this.props.table.event}</h6></div>
+          <div className="text-muted"><h6 className="d-flex justify-content-around"> {this.props.table.event} {this.props.table.date}</h6></div>
 
           {this.props.table.seats.map(seat => {
             return (
@@ -140,6 +140,7 @@ export default class Table extends React.Component {
               : 0}%</CardText>
             <CardText></CardText>
             <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
+            <Button size="lg" block onClick={this.props.back}>Back</Button>
           </Card>
         </div>
       </div>
