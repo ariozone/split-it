@@ -9,10 +9,12 @@ export default class Start extends React.Component {
       tax: 0,
       quantity: '',
       event: '',
-      date: ''
+      date: '',
+      taxRate: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.setTaxRate = this.setTaxRate.bind(this)
   }
   handleChange(e) {
     switch (e.target.id) {
@@ -52,9 +54,17 @@ export default class Start extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const { seats, event, date, tax, subTotal, quantity } = this.state
-    this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal })
+    const { seats, event, date, tax, subTotal, quantity, taxRate } = this.state
+    this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal, taxRate })
   }
+
+  setTaxRate() {
+    this.setState({
+      taxRate: (this.state.subTotal ? (100 * (parseFloat(this.state.tax)) / (parseFloat(this.state.subTotal)).toFixed(2))
+        : 0)
+    })
+  }
+
   render() {
     return (
       <div className="container-fluid pt-3 text-center">
@@ -141,7 +151,7 @@ export default class Start extends React.Component {
               value={this.state.date} id="date-input"
               placeholder={(new Date())} />
 
-            <button type="submit" className="btn btn-primary btn-lg btn-block mt-5">Next</button>
+            <button type="submit" className="btn btn-primary btn-lg btn-block mt-5" onClick={this.setTaxRate}>Next</button>
 
           </div>
         </form>

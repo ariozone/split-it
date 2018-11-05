@@ -137,8 +137,7 @@ export default class Table extends React.Component {
         <div id="card">
           <Card body inverse className="text-center">
             <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
-            <CardText>Tax: {this.props.table.subTotal ? 100 * (parseFloat(this.props.table.tax)) / (parseFloat(this.props.table.subTotal)).toFixed(2)
-              : 0}%</CardText>
+            <CardText>Tax: {this.props.table.taxRate}%</CardText>
             <CardText></CardText>
             <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
             <Button size="lg" block onClick={this.props.back}>Back</Button>
