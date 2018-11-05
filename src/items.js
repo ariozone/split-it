@@ -54,8 +54,7 @@ export default class AddItems extends React.Component {
           <Input type="text" name="item" id="item-input" placeholder="Pizza" onChange={this.handleChange} value={this.state.itemName} />
         </FormGroup>
 
-        <Button type="submit" color="primary">Add Item</Button>
-        <Button color="secondary" onClick={this.props.closePopover}> Done</Button>
+        <Button block type="submit" color="primary" onClick={this.props.closePopover}>Add this Item</Button>
       </Form >
     )
   }
