@@ -60,6 +60,7 @@ export default class Table extends React.Component {
     e.preventDefault()
     const { name, selectedSeat } = this.state
     this.props.onSubmit({ name: name, id: selectedSeat.id })
+    this.setState({ modal: false })
   }
 
   togglePopover() {
