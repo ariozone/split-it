@@ -12,6 +12,11 @@ export default class App extends Component {
     this.updateName = this.updateName.bind(this)
     this.splitEvenly = this.splitEvenly.bind(this)
     this.addItems = this.addItems.bind(this)
+    this.goBack = this.goBack.bind(this)
+  }
+
+  goBack() {
+    this.setState({ view: 'start' })
   }
 
   updateName(selectedSeat) {
@@ -25,13 +30,14 @@ export default class App extends Component {
 
   splitEvenly() {
     const { table } = this.state
-    let splitAmount = (parseFloat(this.state.table.subTotal) + (parseFloat(this.state.table.tax))) / this.state.table.seats.length
+    let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length
     const seats = table.seats.map(seat => {
-      seat.amount = splitAmount.toFixed(2)
-      splitAmount = 0
+      let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount)
+      seat.amount = seatAmount.toFixed(2)
       return seat
     })
-    this.setState({ table: Object.assign({}, table, { seats }) })
+    const subTotal = 0
+    this.setState({ table: Object.assign({}, table, { seats, subTotal }) })
   }
 
   createTable(table) {
@@ -49,11 +55,18 @@ export default class App extends Component {
         let seatAmount = parseFloat(seat.amount)
         seatAmount += amount
         seat.amount = seatAmount
+        let qty = (parseInt(seat.quantity))
+        qty += parseInt(seatItems.orderedItem.quantity)
+        seat.quantity = qty
       }
       return seat
     })
 
-    this.setState({ table: Object.assign({}, table, { seats }) })
+    const subTotal = (parseFloat(table.subTotal) - ((parseInt(seatItems.orderedItem.quantity)) * (parseFloat(seatItems.orderedItem.price)))).toFixed(2)
+
+    const quantity = (parseInt(table.quantity) - ((seatItems.orderedItem.quantity)))
+
+    this.setState({ table: Object.assign({}, table, { seats, subTotal, quantity }) })
   }
 
   renderView() {
@@ -61,7 +74,7 @@ export default class App extends Component {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} />
+      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} back={this.goBack} />
     }
   }
 

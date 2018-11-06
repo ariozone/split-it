@@ -9,6 +9,7 @@ import {
   Form,
   FormGroup,
   Input,
+  Col,
   Card,
   CardTitle,
   CardText
@@ -24,6 +25,7 @@ export default class Table extends React.Component {
       action: 'Add',
       selectedSeat: null,
       amount: 0,
+      quantity: 0,
       orderedItem: {}
     }
     this.handleChange = this.handleChange.bind(this)
@@ -48,7 +50,8 @@ export default class Table extends React.Component {
       selectedSeat: seat,
       name: seat.name,
       action: !seat.name ? 'Add' : 'Edit',
-      amount: seat.amount
+      amount: seat.amount,
+      quantity: seat.quantity
     })
   }
 
@@ -60,6 +63,7 @@ export default class Table extends React.Component {
     e.preventDefault()
     const { name, selectedSeat } = this.state
     this.props.onSubmit({ name: name, id: selectedSeat.id })
+    this.setState({ modal: false })
   }
 
   togglePopover() {
@@ -73,9 +77,9 @@ export default class Table extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container text-center">
         <div className="table">
-          <div className="text-muted"><h6>Date: {this.props.table.date} Event: {this.props.table.event}</h6></div>
+          <div className="text-muted"><h6 className="d-flex justify-content-around"> {this.props.table.event} {this.props.table.date}</h6></div>
 
           {this.props.table.seats.map(seat => {
             return (
@@ -90,57 +94,56 @@ export default class Table extends React.Component {
               </button>
             )
           })}
-          <Modal isOpen={this.state.modal} >
+          <div>
+            <Modal isOpen={this.state.modal} >
+              <ModalHeader className="float-right p-1">
 
-            <ModalHeader className="float-right p-1">
+                <Form inline onSubmit={this.handleSubmit}>
+                  <FormGroup row className="w-100 my-2 ml-2">
+                    <Col sm={10}><Input className="w-100" id="name-input"
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      value={this.state.name}
+                      onChange={this.handleChange}>
+                    </Input></Col><Col sm={2}><Button color="primary" type="submit" className="mr-0">{this.state.action} Name</Button></Col>
+                  </FormGroup>
+                </Form>
+              </ModalHeader>
 
-              <Form inline onSubmit={this.handleSubmit}>
-                <FormGroup className="w-90 mt-3 mx-1">
-                  <Input id="name-input"
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={this.state.name}
-                    onChange={this.handleChange}>
-                  </Input>
-                </FormGroup><Button type="submit" className="">{this.state.action} Name</Button>
-              </Form>
-            </ModalHeader>
+              <ModalBody>
+                <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
 
-            <ModalBody>
-              <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
+                  <ModalHeader className="float-right p-1">
+                    Add Ordered Items
+                  </ModalHeader>
 
-                <ModalHeader className="float-right p-1">
-                  Add Ordered Items
-                </ModalHeader>
+                  <ModalBody>
+                    <AddItems addItems={this.addItems} closePopover={this.closePopover} />
+                  </ModalBody>
 
-                <ModalBody>
-                  <AddItems addItems={this.addItems} closePopover={this.closePopover} />
-                </ModalBody>
+                  <ModalFooter>
+                  </ModalFooter>
+                </Modal>
+              </ModalBody>
 
-                <ModalFooter>
-                </ModalFooter>
-              </Modal>
-            </ModalBody>
+              <ModalFooter>
+                <h6 className="mx-3">Amount: ${parseFloat(this.state.amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(this.state.quantity)}</h6>
 
-            <ModalFooter>
-              <h6 className="mx-5">Amount: ${parseFloat(this.state.amount).toFixed(2)} </h6>
-
-              <Button color="primary" id="Popover1"
-                onClick={this.togglePopover}>Add Items</Button>
-              <Button color="secondary" onClick={this.closeModal}>Done</Button>
-            </ModalFooter>
-          </Modal>
-        </div>
-
-        <div id="card">
-          <Card body inverse className="text-center">
-            <CardTitle>Quantity: {this.props.table.quantity}</CardTitle>
-            <CardText>Tax: {this.props.table.subTotal ? 100 * (parseFloat(this.props.table.tax)) / (parseFloat(this.props.table.subTotal)).toFixed(2)
-              : 0}%</CardText>
-            <CardText></CardText>
-            <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
-          </Card>
+                <Button color="primary" id="Popover1"
+                  onClick={this.togglePopover}>Add Items</Button>
+                <Button color="secondary" onClick={this.closeModal}>Done</Button>
+              </ModalFooter>
+            </Modal></div>
+          <div id="card">
+            <Card body inverse className="text-center" >
+              <CardTitle>Shared Items: {this.props.table.quantity}</CardTitle>
+              <CardText>Tax: {this.props.table.taxRate}%</CardText>
+              <CardText></CardText>
+              <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
+              <Button size="lg" block onClick={this.props.back}>Back</Button>
+            </Card>
+          </div>
         </div>
       </div>
     )

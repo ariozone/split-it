@@ -9,10 +9,12 @@ export default class Start extends React.Component {
       tax: 0,
       quantity: '',
       event: '',
-      date: ''
+      date: '',
+      taxRate: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.setTaxRate = this.setTaxRate.bind(this)
   }
   handleChange(e) {
     switch (e.target.id) {
@@ -52,12 +54,20 @@ export default class Start extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const { seats, event, date, tax, subTotal, quantity } = this.state
-    this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal })
+    const { seats, event, date, tax, subTotal, quantity, taxRate } = this.state
+    this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal, taxRate })
   }
+
+  setTaxRate() {
+    this.setState({
+      taxRate: (this.state.subTotal ? (100 * (parseFloat(this.state.tax)) / (parseFloat(this.state.subTotal)).toFixed(2))
+        : 0)
+    })
+  }
+
   render() {
     return (
-      <div className="container-fluid pt-3 text-center">
+      <div className="container pt-3 text-center">
         <h1 className="text-center mx-auto my-2">Create Table</h1>
         <form className="mx-auto" onSubmit={this.handleSubmit}>
           <div className="form-group mx-5">
@@ -138,9 +148,10 @@ export default class Start extends React.Component {
               className="form-control"
               type="date"
               onChange={this.handleChange}
-              value={this.state.date} id="date-input" />
+              value={this.state.date} id="date-input"
+              placeholder={(new Date())} />
 
-            <button type="submit" className="btn btn-primary btn-lg btn-block mt-5">Next</button>
+            <button type="submit" className="btn btn-primary btn-lg btn-block mt-5" onClick={this.setTaxRate}>Next</button>
 
           </div>
         </form>
@@ -152,7 +163,7 @@ export default class Start extends React.Component {
 function createSeats(number) {
   const array = []
   for (let i = 1; i <= number; i++) {
-    array.push({ name: '', amount: 0, orderedList: [], id: i - 1 })
+    array.push({ name: '', amount: 0, orderedList: [], quantity: 0, id: i - 1 })
   }
   return array
 }
