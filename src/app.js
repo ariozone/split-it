@@ -55,11 +55,18 @@ export default class App extends Component {
         let seatAmount = parseFloat(seat.amount)
         seatAmount += amount
         seat.amount = seatAmount
+        let qty = (parseInt(seat.quantity))
+        qty += parseInt(seatItems.orderedItem.quantity)
+        seat.quantity = qty
       }
       return seat
     })
+
     const subTotal = (parseFloat(table.subTotal) - ((parseInt(seatItems.orderedItem.quantity)) * (parseFloat(seatItems.orderedItem.price)))).toFixed(2)
-    this.setState({ table: Object.assign({}, table, { seats, subTotal }) })
+
+    const quantity = (parseInt(table.quantity) - ((seatItems.orderedItem.quantity)))
+
+    this.setState({ table: Object.assign({}, table, { seats, subTotal, quantity }) })
   }
 
   renderView() {

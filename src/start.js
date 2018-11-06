@@ -67,7 +67,7 @@ export default class Start extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid pt-3 text-center">
+      <div className="container pt-3 text-center">
         <h1 className="text-center mx-auto my-2">Create Table</h1>
         <form className="mx-auto" onSubmit={this.handleSubmit}>
           <div className="form-group mx-5">
@@ -163,7 +163,7 @@ export default class Start extends React.Component {
 function createSeats(number) {
   const array = []
   for (let i = 1; i <= number; i++) {
-    array.push({ name: '', amount: 0, orderedList: [], id: i - 1 })
+    array.push({ name: '', amount: 0, orderedList: [], quantity: 0, id: i - 1 })
   }
   return array
 }
