@@ -9,6 +9,7 @@ import {
   Form,
   FormGroup,
   Input,
+  Col,
   Card,
   CardTitle,
   CardText
@@ -93,47 +94,47 @@ export default class Table extends React.Component {
               </button>
             )
           })}
-          <Modal isOpen={this.state.modal} >
+          <div>
+            <Modal isOpen={this.state.modal} >
+              <ModalHeader className="float-right p-1">
 
-            <ModalHeader className="float-right p-1">
+                <Form inline onSubmit={this.handleSubmit}>
+                  <FormGroup row className="w-100 my-2 ml-2">
+                    <Col sm={10}><Input className="w-100" id="name-input"
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      value={this.state.name}
+                      onChange={this.handleChange}>
+                    </Input></Col><Col sm={2}><Button color="primary" type="submit" className="mr-0">{this.state.action} Name</Button></Col>
+                  </FormGroup>
+                </Form>
+              </ModalHeader>
 
-              <Form inline onSubmit={this.handleSubmit}>
-                <FormGroup className="w-90 mt-3 mx-1">
-                  <Input id="name-input"
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={this.state.name}
-                    onChange={this.handleChange}>
-                  </Input>
-                </FormGroup><Button type="submit" className="">{this.state.action} Name</Button>
-              </Form>
-            </ModalHeader>
+              <ModalBody>
+                <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
 
-            <ModalBody>
-              <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
+                  <ModalHeader className="float-right p-1">
+                    Add Ordered Items
+                  </ModalHeader>
 
-                <ModalHeader className="float-right p-1">
-                  Add Ordered Items
-                </ModalHeader>
+                  <ModalBody>
+                    <AddItems addItems={this.addItems} closePopover={this.closePopover} />
+                  </ModalBody>
 
-                <ModalBody>
-                  <AddItems addItems={this.addItems} closePopover={this.closePopover} />
-                </ModalBody>
+                  <ModalFooter>
+                  </ModalFooter>
+                </Modal>
+              </ModalBody>
 
-                <ModalFooter>
-                </ModalFooter>
-              </Modal>
-            </ModalBody>
+              <ModalFooter>
+                <h6 className="mx-3">Amount: ${parseFloat(this.state.amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(this.state.quantity)}</h6>
 
-            <ModalFooter>
-              <h6 className="mx-5">Amount: ${parseFloat(this.state.amount).toFixed(2)} QTY: {parseInt(this.state.quantity)}</h6>
-
-              <Button color="primary" id="Popover1"
-                onClick={this.togglePopover}>Add Items</Button>
-              <Button color="secondary" onClick={this.closeModal}>Done</Button>
-            </ModalFooter>
-          </Modal>
+                <Button color="primary" id="Popover1"
+                  onClick={this.togglePopover}>Add Items</Button>
+                <Button color="secondary" onClick={this.closeModal}>Done</Button>
+              </ModalFooter>
+            </Modal></div>
           <div id="card">
             <Card body inverse className="text-center" >
               <CardTitle>Shared Items: {this.props.table.quantity}</CardTitle>
