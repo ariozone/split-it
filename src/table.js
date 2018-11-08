@@ -25,7 +25,7 @@ export default class Table extends React.Component {
       action: 'Add',
       selectedSeat: null,
       amount: 0,
-      quantity: 0,
+      quantity: '',
       orderedItem: {}
     }
     this.handleChange = this.handleChange.bind(this)
@@ -100,13 +100,14 @@ export default class Table extends React.Component {
 
                 <Form inline onSubmit={this.handleSubmit}>
                   <FormGroup row className="w-100 my-2 ml-2">
-                    <Col sm={10}><Input className="w-100" id="name-input"
-                      type="text"
-                      name="name"
-                      placeholder="Name"
-                      value={this.state.name}
-                      onChange={this.handleChange}>
-                    </Input></Col><Col sm={2}><Button color="primary" type="submit" className="mr-0">{this.state.action} Name</Button></Col>
+                    <Col sm={10}>
+                      <Input className="w-100" id="name-input"
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={this.state.name}
+                        onChange={this.handleChange}>
+                      </Input></Col><Col sm={2}><Button color="primary" type="submit" className="mr-0">{this.state.action} Name</Button></Col>
                   </FormGroup>
                 </Form>
               </ModalHeader>
@@ -114,7 +115,7 @@ export default class Table extends React.Component {
               <ModalBody>
                 <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
 
-                  <ModalHeader className="float-right p-1">
+                  <ModalHeader className="w-100">
                     Add Ordered Items
                   </ModalHeader>
 
