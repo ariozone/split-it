@@ -59,10 +59,11 @@ export default class Start extends React.Component {
   }
 
   setTaxRate() {
-    this.setState({
-      taxRate: (this.state.subTotal ? (100 * (parseFloat(this.state.tax)) / (parseFloat(this.state.subTotal)).toFixed(2))
-        : 0)
-    })
+    if (this.state.subTotal) {
+      this.setState({
+        taxRate: (100 * (parseFloat(this.state.tax)) / (parseFloat(this.state.subTotal)).toFixed(2))
+      })
+    }
   }
 
   render() {
@@ -126,7 +127,7 @@ export default class Start extends React.Component {
             <label
               htmlFor="quantity">Quantity of Ordered Items:</label>
             <div className="input-group">
-              <input type="number" className="form-control"
+              <input type="number" min="0" step="1" className="form-control"
                 id="quantity" value={this.state.quantity}
                 onChange={this.handleChange} /></div>
           </div>

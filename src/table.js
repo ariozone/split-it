@@ -25,7 +25,7 @@ export default class Table extends React.Component {
       action: 'Add',
       selectedSeat: null,
       amount: 0,
-      quantity: '',
+      quantity: 0,
       orderedItem: {}
     }
     this.handleChange = this.handleChange.bind(this)
