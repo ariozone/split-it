@@ -79,7 +79,7 @@ export default class Table extends React.Component {
     return (
       <div className="container text-center">
         <div className="table">
-          <div className="text-muted"><h6 className="d-flex justify-content-around"> {this.props.table.event} {this.props.table.date}</h6></div>
+          <div className="text-muted"><h5 className="d-flex justify-content-around"> {this.props.table.event}&nbsp;&nbsp; {this.props.table.date}</h5></div>
 
           {this.props.table.seats.map(seat => {
             return (
@@ -99,14 +99,15 @@ export default class Table extends React.Component {
               <ModalHeader className="float-right p-1">
 
                 <Form inline onSubmit={this.handleSubmit}>
-                  <FormGroup row className="w-100 my-2 ml-2">
-                    <Col sm={10}><Input className="w-100" id="name-input"
-                      type="text"
-                      name="name"
-                      placeholder="Name"
-                      value={this.state.name}
-                      onChange={this.handleChange}>
-                    </Input></Col><Col sm={2}><Button color="primary" type="submit" className="mr-0">{this.state.action} Name</Button></Col>
+                  <FormGroup inline row className="w-100 my-2 mx-auto">
+                    <Col sm={10}>
+                      <Input className="w-100" id="name-input"
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={this.state.name}
+                        onChange={this.handleChange}>
+                      </Input></Col><Col sm={2}><Button color="primary" type="submit" className="mr-0">{this.state.action} Name</Button></Col>
                   </FormGroup>
                 </Form>
               </ModalHeader>
@@ -114,8 +115,8 @@ export default class Table extends React.Component {
               <ModalBody>
                 <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
 
-                  <ModalHeader className="float-right p-1">
-                    Add Ordered Items
+                  <ModalHeader className="w-100">
+                    Add Ordered Items<Button close className="close" onClick={this.closePopover} />
                   </ModalHeader>
 
                   <ModalBody>
@@ -141,7 +142,9 @@ export default class Table extends React.Component {
               <CardText>Tax: {this.props.table.taxRate}%</CardText>
               <CardText></CardText>
               <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
-              <Button size="lg" block onClick={this.props.back}>Back</Button>
+              {this.props.table.taxRate && !this.props.table.subTotal ? <Button size="lg" block active
+                onClick={this.props.applyTaxes}
+              >Apply Taxes</Button> : <Button size="lg" block onClick={this.props.back}>Back</Button>}
             </Card>
           </div>
         </div>
