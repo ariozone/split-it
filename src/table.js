@@ -99,7 +99,7 @@ export default class Table extends React.Component {
               <ModalHeader className="float-right p-1">
 
                 <Form inline onSubmit={this.handleSubmit}>
-                  <FormGroup row className="w-100 my-2 ml-2">
+                  <FormGroup inline row className="w-100 my-2 mx-auto">
                     <Col sm={10}>
                       <Input className="w-100" id="name-input"
                         type="text"
@@ -116,7 +116,7 @@ export default class Table extends React.Component {
                 <Modal isOpen={this.state.popoverOpen} toggle={this.togglePopover}>
 
                   <ModalHeader className="w-100">
-                    Add Ordered Items
+                    Add Ordered Items<Button close className="close" onClick={this.closePopover} />
                   </ModalHeader>
 
                   <ModalBody>
