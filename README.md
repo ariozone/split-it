@@ -1,5 +1,9 @@
-# check-splitter
+# SplitIt!
 An application for groups to easily split their restaurant bill.
+
+### Add the bill's subtotal, tax and table's basic information to build your virtual table.
+
+![](start.gif)
 
 ## Technologies
 - React.js
