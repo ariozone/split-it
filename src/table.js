@@ -79,7 +79,7 @@ export default class Table extends React.Component {
     return (
       <div className="container text-center">
         <div className="table">
-          <div className="text-muted"><h6 className="d-flex justify-content-around"> {this.props.table.event} {this.props.table.date}</h6></div>
+          <div className="text-muted"><h5 className="d-flex justify-content-around"> {this.props.table.event}&nbsp;&nbsp; {this.props.table.date}</h5></div>
 
           {this.props.table.seats.map(seat => {
             return (
