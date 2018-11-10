@@ -13,6 +13,7 @@ export default class App extends Component {
     this.splitEvenly = this.splitEvenly.bind(this)
     this.addItems = this.addItems.bind(this)
     this.goBack = this.goBack.bind(this)
+    this.applyTax = this.applyTax.bind(this)
   }
 
   goBack() {
@@ -61,7 +62,6 @@ export default class App extends Component {
       }
       return seat
     })
-
     const subTotal = (parseFloat(table.subTotal) - ((parseInt(seatItems.orderedItem.quantity)) * (parseFloat(seatItems.orderedItem.price)))).toFixed(2)
 
     const quantity = (parseInt(table.quantity) - ((seatItems.orderedItem.quantity)))
@@ -69,12 +69,24 @@ export default class App extends Component {
     this.setState({ table: Object.assign({}, table, { seats, subTotal, quantity }) })
   }
 
+  applyTax() {
+    const { table } = this.state
+    const seats = table.seats.map(seat => {
+      const taxRate = parseFloat(table.taxRate)
+      let seatAmount = parseFloat(seat.amount)
+      let taxAmount = (seatAmount * taxRate) / 100
+      seat.amount = parseFloat(seatAmount + taxAmount).toFixed(2)
+      return seat
+    })
+    this.setState({ table: Object.assign({}, table, { seats }) })
+  }
+
   renderView() {
     if (this.state.view === 'start') {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} back={this.goBack} />
+      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} back={this.goBack} applyTaxes={this.applyTax} />
     }
   }
 

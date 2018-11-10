@@ -143,7 +143,7 @@ export default class Table extends React.Component {
               <CardText></CardText>
               <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
               {this.props.table.taxRate && !this.props.table.subTotal ? <Button size="lg" block active
-              // onClick={this.props.back}
+                onClick={this.props.applyTaxes}
               >Apply Taxes</Button> : <Button size="lg" block onClick={this.props.back}>Back</Button>}
             </Card>
           </div>
