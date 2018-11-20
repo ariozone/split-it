@@ -68,7 +68,7 @@ export default class Start extends React.Component {
 
   render() {
     return (
-      <div className="container pt-3 text-center">
+      <div className="container pt-3 w-30 text-center">
         <h1 className="text-center mx-auto my-2">Create Table</h1>
         <form className="mx-auto" onSubmit={this.handleSubmit}>
           <div className="form-group mx-5">

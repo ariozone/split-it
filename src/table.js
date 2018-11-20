@@ -77,7 +77,7 @@ export default class Table extends React.Component {
 
   render() {
     return (
-      <div className="container text-center">
+      <div className="container text-center p-1">
         <div className="table">
           <div className="text-muted"><h5 className="d-flex justify-content-around"> {this.props.table.event}&nbsp;&nbsp; {this.props.table.date}</h5></div>
 
@@ -85,7 +85,7 @@ export default class Table extends React.Component {
             return (
               <button
                 key={seat.id}
-                className="circle"
+                className="circle shadow-lg m-1"
                 type="button"
                 onClick={() => this.selectSeat(seat)}
               >
@@ -94,6 +94,17 @@ export default class Table extends React.Component {
               </button>
             )
           })}
+          <div id="card" className="fixed-bottom mx-auto">
+            <Card body inverse className="text-center" >
+              <CardTitle>Shared Items: {this.props.table.quantity}</CardTitle>
+              <CardText>Tax: {this.props.table.taxRate}%</CardText>
+              <CardText></CardText>
+              <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
+              {this.props.table.taxRate && !this.props.table.subTotal ? <Button size="lg" block active
+                onClick={this.props.applyTaxes}
+              >Apply Taxes</Button> : <Button size="lg" block onClick={this.props.back}>Back</Button>}
+            </Card>
+          </div>
           <div>
             <Modal isOpen={this.state.modal} >
               <ModalHeader className="float-right p-1">
@@ -136,17 +147,6 @@ export default class Table extends React.Component {
                 <Button color="secondary" onClick={this.closeModal}>Done</Button>
               </ModalFooter>
             </Modal></div>
-          <div id="card">
-            <Card body inverse className="text-center" >
-              <CardTitle>Shared Items: {this.props.table.quantity}</CardTitle>
-              <CardText>Tax: {this.props.table.taxRate}%</CardText>
-              <CardText></CardText>
-              <Button size="lg" block onClick={this.props.splitEqually}>Split ${(parseFloat(this.props.table.subTotal))} Equally</Button>
-              {this.props.table.taxRate && !this.props.table.subTotal ? <Button size="lg" block active
-                onClick={this.props.applyTaxes}
-              >Apply Taxes</Button> : <Button size="lg" block onClick={this.props.back}>Back</Button>}
-            </Card>
-          </div>
         </div>
       </div>
     )
