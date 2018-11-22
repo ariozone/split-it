@@ -55,7 +55,9 @@ export default class Start extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const { seats, event, date, tax, subTotal, quantity, taxRate } = this.state
-    this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal, taxRate })
+    if (subTotal > 0) {
+      this.props.onSubmit({ seats: createSeats(seats), event, date, tax, quantity, subTotal, taxRate })
+    }
   }
 
   setTaxRate() {
@@ -99,7 +101,7 @@ export default class Start extends React.Component {
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
-              <CurrencyInput precision="2"
+              <CurrencyInput required precision="2"
                 className="form-control"
                 aria-label="Amount"
                 id="subtotal"
