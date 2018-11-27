@@ -1,11 +1,31 @@
 
-body {
-  vertical-align: middle;
+@media (min-width: 800px) {
+  body {
+    vertical-align: middle;
+    padding: 1% 25%;
+    font-family: 'Comfortaa', cursive !important;
+  }
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
+@media (min-width: 600px) {
+  body {
+    vertical-align: middle;
+    padding: 1% 10%;
+    font-family: 'Comfortaa', cursive !important;
+  }
+}
+
+@media (min-width: 1000px) {
+  body {
+    vertical-align: middle;
+    padding: 1% 30%;
+    font-family: 'Comfortaa', cursive !important;
+  }
+}
+
+.container,
+#card {
+  max-width: 600px;
 }
 
 .close {
@@ -29,28 +49,24 @@ body {
   border: none;
 }
 
-#card {
-  position: absolute;
-  bottom: 2%;
-  width: 90%;
-}
-
 .circle {
   background: rgb(120, 118, 126);
   border-radius: 50%;
+  border: solid 0.5rem rgb(85, 82, 94);
   color: white;
   height: 7rem;
-  font-weight: bold;
   width: 7rem;
   display: inline-block;
-  margin: 3%;
+  margin: 1%;
   overflow: auto;
   position: relative;
-  border: none;
   outline: none !important;
-  box-shadow: none;
 }
 
 .circle p {
   vertical-align: middle;
+}
+
+table {
+  color: gray !important;
 }

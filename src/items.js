@@ -7,7 +7,7 @@ export default class AddItems extends React.Component {
     super(props)
     this.state = {
       price: 0,
-      quantity: 0,
+      quantity: null,
       itemName: ''
     }
     this.handleChange = this.handleChange.bind(this)
@@ -31,8 +31,11 @@ export default class AddItems extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const { price, quantity, itemName } = this.state
-    this.props.addItems({ price: price, quantity: quantity, itemName: itemName })
-    this.setState({ price: 0, quantity: 0, itemName: '' })
+    if (price) {
+      this.props.addItems({ itemName: itemName, quantity: quantity, price: price })
+    }
+    this.setState({ itemName: '', quantity: null, price: 0 })
+    this.forceUpdate()
   }
 
   render() {
@@ -41,12 +44,12 @@ export default class AddItems extends React.Component {
 
         <FormGroup>
           <Label for="price" >Item Price</Label>
-          <CurrencyInput className="form-control" precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value={this.state.price} />
+          <CurrencyInput required className="form-control" precision="2" placeholder="$0.00" id="price" onChangeEvent={this.handleChange} value={this.state.price} />
         </FormGroup>
 
         <FormGroup>
           <Label for="quantity" >Number of Items</Label>
-          <Input type="number" name="quantity" id="quantity" onChange={this.handleChange} value={this.state.quantity} />
+          <Input type="number" name="quantity" id="quantity" onChange={this.handleChange} />
         </FormGroup>
 
         <FormGroup>
