@@ -40,7 +40,6 @@ export default class Table extends React.Component {
 
   closeModal() {
     this.setState({ modal: false })
-
   }
 
   closePopover() {
@@ -131,7 +130,7 @@ export default class Table extends React.Component {
               </ModalHeader>
 
               <ModalBody>
-                <table className="table table-dark">
+                {this.state.bill.length > 0 ? <table className="table table-dark">
                   <thead>
                     <tr>
                       <th>Item</th>
@@ -145,7 +144,8 @@ export default class Table extends React.Component {
                     ))}
 
                   </tbody>
-                </table>
+                </table> : <p>No Bill Items
+                </p>}
 
               </ModalBody>
 
