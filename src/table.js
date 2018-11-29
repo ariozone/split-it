@@ -9,10 +9,10 @@ import {
   Form,
   FormGroup,
   Input,
-  Col,
-  Row,
+  InputGroup,
   Card,
   CardTitle,
+  InputGroupAddon,
   CardText
 } from 'reactstrap'
 
@@ -43,7 +43,7 @@ export default class Table extends React.Component {
   }
 
   closePopover() {
-    this.setState({ popoverOpen: false })
+    this.setState({ popoverOpen: false, modal: false })
   }
 
   selectSeat(seat) {
@@ -94,8 +94,8 @@ export default class Table extends React.Component {
                 type="button"
                 onClick={() => this.selectSeat(seat)}
               >
-                <p>{seat.name}</p>
-                <p>${parseFloat(seat.amount).toFixed(2)}</p>
+                {seat.name}<br />
+                ${parseFloat(seat.amount).toFixed(2)}
               </button>
             )
           })}
@@ -114,17 +114,21 @@ export default class Table extends React.Component {
 
           <div>
             <Modal isOpen={modal} >
-              <ModalHeader className="p-1 w-100">
-                <Form inline onSubmit={this.handleSubmit}>
-                  <FormGroup inline row className="w-100 my-2 mx-auto">
-                    <Row><Col sm={10}>
-                      <Input className="w-100" id="name-input"
+              <ModalHeader className="text-center">
+                <Form onSubmit={this.handleSubmit}>
+                  <FormGroup>
+                    <InputGroup>
+                      <Input className="bg-dark" id="name-input"
                         type="text"
                         name="name"
                         placeholder="Name"
                         value={name}
                         onChange={this.handleChange}>
-                      </Input></Col><Col sm={2}><Button color="primary" type="submit" className="fixed-right mr-0">{action} Name</Button></Col></Row>
+                      </Input>
+                      <InputGroupAddon addonType="append"><Button color="primary"
+                      >{action} Name</Button>
+                      </InputGroupAddon>
+                    </InputGroup>
                   </FormGroup>
                 </Form>
               </ModalHeader>

@@ -5,7 +5,7 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
-      subTotal: 0,
+      subTotal: '0',
       tax: 0,
       quantity: '',
       event: '',
@@ -101,7 +101,7 @@ export default class Start extends React.Component {
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
-              <CurrencyInput required precision="2"
+              <CurrencyInput required thousandSeparator="" precision="2"
                 className="form-control"
                 aria-label="Amount"
                 id="subtotal"
@@ -115,7 +115,8 @@ export default class Start extends React.Component {
             <label
               htmlFor="tax-input">Bill Tax:</label>
             <div className="input-group">
-              <CurrencyInput precision="2"
+              <CurrencyInput
+                precision="2"
                 className="form-control"
                 aria-label="Amount"
                 id="tax-input"
