@@ -1,9 +1,10 @@
 
 # SplitIt!
 
- An application for groups to easily split their restaurant bill on their mobile devices.
+ An application for groups to easily split their restaurant bill.
  
-
+ ### [Live Demo](https://ariozone.github.io/split-it/)
+ 
 #### Add the bill's subtotal, tax and table's basic information to build your virtual table.
 <p align="center">
 <img src="start.gif"/>
