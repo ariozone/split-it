@@ -101,7 +101,10 @@ export default class Start extends React.Component {
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
-              <CurrencyInput required thousandSeparator="" precision="2"
+              <CurrencyInput
+                required
+                thousandSeparator=""
+                precision="2"
                 className="form-control"
                 aria-label="Amount"
                 id="subtotal"

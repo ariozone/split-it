@@ -78,7 +78,8 @@ export default class App extends Component {
       seat.amount = parseFloat(seatAmount + taxAmount).toFixed(2)
       return seat
     })
-    this.setState({ table: Object.assign({}, table, { seats }) })
+    const taxRate = 0
+    this.setState({ table: Object.assign({}, table, { seats, taxRate }) })
   }
 
   renderView() {
