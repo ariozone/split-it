@@ -108,7 +108,9 @@ export default class Table extends React.Component {
               <Button size="lg" block onClick={splitEqually}>Split ${(parseFloat(table.subTotal))} Equally</Button>
               {table.taxRate && !table.subTotal ? <Button size="lg" block
                 onClick={applyTaxes}
-              >Apply Taxes</Button> : <Button size="lg" block onClick={back}>Back</Button>}
+              >Apply Taxes</Button> : <Button size="lg" block onClick={back}> {!table.taxRate && !table.subTotal ? 'Finish' : 'Back'} </Button>
+              }
+
             </Card>
           </div>
 
@@ -166,7 +168,7 @@ export default class Table extends React.Component {
                   <ModalFooter>
                   </ModalFooter>
                 </Modal>
-                <h6 className="mx-3">Amount: ${parseFloat(amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(quantity)}</h6>
+                <h6 className="mx-3">Amount: ${parseFloat(amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(quantity)}</h6>
 
                 <Button color="primary" id="Popover1"
                   onClick={this.togglePopover}>Add Items</Button>

@@ -29,22 +29,6 @@ export default class App extends Component {
     })
   }
 
-  splitEvenly() {
-    const { table } = this.state
-    let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length
-    const seats = table.seats.map(seat => {
-      let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount)
-      seat.amount = seatAmount.toFixed(2)
-      return seat
-    })
-    const subTotal = 0
-    this.setState({ table: Object.assign({}, table, { seats, subTotal }) })
-  }
-
-  createTable(table) {
-    this.setState({ table, view: 'table' })
-  }
-
   addItems(seatItems) {
     const { table } = this.state
     const itemsList = []
@@ -67,6 +51,22 @@ export default class App extends Component {
     const quantity = (parseInt(table.quantity) - ((seatItems.orderedItem.quantity)))
 
     this.setState({ table: Object.assign({}, table, { seats, subTotal, quantity }) })
+  }
+
+  splitEvenly() {
+    const { table } = this.state
+    let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length
+    const seats = table.seats.map(seat => {
+      let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount)
+      seat.amount = seatAmount.toFixed(2)
+      return seat
+    })
+    const subTotal = 0
+    this.setState({ table: Object.assign({}, table, { seats, subTotal }) })
+  }
+
+  createTable(table) {
+    this.setState({ table, view: 'table' })
   }
 
   applyTax() {
