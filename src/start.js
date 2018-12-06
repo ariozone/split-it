@@ -1,5 +1,4 @@
 import React from 'react'
-import CurrencyInput from 'react-currency-input'
 export default class Start extends React.Component {
   constructor(props) {
     super(props)
@@ -101,7 +100,9 @@ export default class Start extends React.Component {
             <label
               htmlFor="subtotal">Bill Subtotal (Before Tax):</label>
             <div className="input-group">
-              <CurrencyInput
+              <input
+                type="number"
+                step="0.01"
                 required
                 thousandSeparator=""
                 precision="2"
@@ -109,7 +110,7 @@ export default class Start extends React.Component {
                 aria-label="Amount"
                 id="subtotal"
                 value={this.state.subTotal}
-                onChangeEvent={this.handleChange}
+                onChange={this.handleChange}
               />
             </div>
           </div>
@@ -118,13 +119,15 @@ export default class Start extends React.Component {
             <label
               htmlFor="tax-input">Bill Tax:</label>
             <div className="input-group">
-              <CurrencyInput
+              <input
+                type="number"
+                step="0.01"
                 precision="2"
                 className="form-control"
                 aria-label="Amount"
                 id="tax-input"
                 value={this.state.tax}
-                onChangeEvent={this.handleChange}
+                onChange={this.handleChange}
               />
             </div>
           </div>
