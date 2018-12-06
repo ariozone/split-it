@@ -58,6 +58,7 @@ export default class App extends Component {
     let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length
     const seats = table.seats.map(seat => {
       let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount)
+      seat.shared = splitAmount.toFixed(2)
       seat.amount = seatAmount.toFixed(2)
       return seat
     })

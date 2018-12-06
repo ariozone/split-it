@@ -4,8 +4,8 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
-      subTotal: '0',
-      tax: 0,
+      subTotal: null,
+      tax: null,
       quantity: '',
       event: '',
       date: '',

@@ -26,6 +26,7 @@ export default class Table extends React.Component {
       action: 'Add',
       selectedSeat: null,
       bill: [],
+      shared: 0,
       amount: 0,
       quantity: 0,
       orderedItem: {}
@@ -52,6 +53,7 @@ export default class Table extends React.Component {
       selectedSeat: seat,
       name: seat.name,
       bill: seat.orderedList,
+      shared: seat.shared,
       action: !seat.name ? 'Add' : 'Edit',
       amount: seat.amount,
       quantity: seat.quantity
@@ -80,7 +82,7 @@ export default class Table extends React.Component {
 
   render() {
     const { table, splitEqually, applyTaxes, back } = this.props
-    const { modal, name, action, quantity, popoverOpen, amount } = this.state
+    const { modal, name, action, quantity, popoverOpen, amount, shared } = this.state
     return (
       <div className="container text-center p-1">
         <div className="table">
@@ -148,6 +150,11 @@ export default class Table extends React.Component {
                     {this.state.bill.map((row, i) => (
                       <tr key={i}>{Object.values(row).map((rowValue, i) => <td key={i}>{rowValue}</td>)}</tr>
                     ))}
+                    <tr>
+                      <td>Shared Items</td>
+                      <td>{table.quantity}</td>
+                      <td>{!table.quantity ? table.subTotal : shared}</td>
+                    </tr>
 
                   </tbody>
                 </table> : <p>No Bill Items
