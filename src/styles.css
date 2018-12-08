@@ -83,6 +83,7 @@ table {
   color: gray !important;
 }
 
-.tax {
+.tax,
+thead {
   background-color: rgb(38, 37, 37) !important;
 }

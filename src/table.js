@@ -147,7 +147,16 @@ export default class Table extends React.Component {
                       <th>QTY</th>
                       <th>Price</th>
                     </tr>
-                  </thead> : <p>No Oreders for this Seat</p>}
+                  </thead>
+                    : <thead>
+                      <tr>
+                        <th></th>
+                        <th>No Oreders for this Seat</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    // <p className="text-center align-middle mx-auto">No Oreders for this Seat</p>
+                  }
                   <tbody>
                     {this.state.bill.map((row, i) => (
                       <tr key={i}>{Object.values(row).map((rowValue, i) => <td key={i}>{rowValue}</td>)}</tr>
@@ -165,7 +174,7 @@ export default class Table extends React.Component {
                       <td>${this.state.tax}</td>
                     </tr> : null}</tfoot>
                 </table>
-                  : <p>No Bill Items
+                  : <p className="text-center">No Bill Items
                   </p>}
 
               </ModalBody>
