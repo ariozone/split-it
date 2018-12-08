@@ -29,7 +29,8 @@ export default class Table extends React.Component {
       shared: 0,
       amount: 0,
       quantity: 0,
-      orderedItem: {}
+      orderedItem: {},
+      tax: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -56,7 +57,8 @@ export default class Table extends React.Component {
       shared: seat.shared,
       action: !seat.name ? 'Add' : 'Edit',
       amount: seat.amount,
-      quantity: seat.quantity
+      quantity: seat.quantity,
+      tax: seat.tax
     })
   }
 
@@ -82,7 +84,7 @@ export default class Table extends React.Component {
 
   render() {
     const { table, splitEqually, applyTaxes, back } = this.props
-    const { modal, name, action, quantity, popoverOpen, amount, shared } = this.state
+    const { modal, name, action, quantity, popoverOpen, amount, shared, bill } = this.state
     return (
       <div className="container text-center p-1">
         <div className="table">
@@ -138,14 +140,14 @@ export default class Table extends React.Component {
               </ModalHeader>
 
               <ModalBody>
-                {this.state.bill.length > 0 ? <table className="table table-dark">
-                  <thead>
+                {bill.length > 0 || shared ? <table className="table table-sm table-dark">
+                  {this.state.bill.length > 0 ? <thead>
                     <tr>
                       <th>Item</th>
                       <th>QTY</th>
                       <th>Price</th>
                     </tr>
-                  </thead>
+                  </thead> : <p>No Oreders for this Seat</p>}
                   <tbody>
                     {this.state.bill.map((row, i) => (
                       <tr key={i}>{Object.values(row).map((rowValue, i) => <td key={i}>{rowValue}</td>)}</tr>
@@ -153,12 +155,18 @@ export default class Table extends React.Component {
                     <tr>
                       <td>Shared Items</td>
                       <td>{table.quantity}</td>
-                      <td>{!table.quantity ? table.subTotal : shared}</td>
+                      <td>${!table.quantity ? table.subTotal : shared}</td>
                     </tr>
-
                   </tbody>
-                </table> : <p>No Bill Items
-                </p>}
+                  <tfoot>
+                    {this.state.tax ? <tr className="tax">
+                      <td>Tax:</td>
+                      <td></td>
+                      <td>${this.state.tax}</td>
+                    </tr> : null}</tfoot>
+                </table>
+                  : <p>No Bill Items
+                  </p>}
 
               </ModalBody>
 

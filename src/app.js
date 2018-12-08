@@ -76,6 +76,7 @@ export default class App extends Component {
       const taxRate = parseFloat(table.taxRate)
       let seatAmount = parseFloat(seat.amount)
       let taxAmount = (seatAmount * taxRate) / 100
+      seat.tax = taxAmount.toFixed(2)
       seat.amount = parseFloat(seatAmount + taxAmount).toFixed(2)
       return seat
     })
