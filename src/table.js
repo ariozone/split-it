@@ -9,10 +9,8 @@ import {
   Form,
   FormGroup,
   Input,
-  InputGroup,
   Card,
   CardTitle,
-  InputGroupAddon,
   CardText
 } from 'reactstrap'
 
@@ -22,7 +20,8 @@ export default class Table extends React.Component {
     this.state = {
       modal: false,
       popoverOpen: false,
-      name: ' ',
+      name: '',
+      nameInput: false,
       action: 'Add',
       selectedSeat: null,
       bill: [],
@@ -49,13 +48,17 @@ export default class Table extends React.Component {
   }
 
   selectSeat(seat) {
-    this.setState({
+    !seat.name ? this.setState({
+      nameInput: true,
+      selectedSeat: seat,
+      name: ''
+
+    }) : this.setState({
       modal: true,
       selectedSeat: seat,
       name: seat.name,
       bill: seat.orderedList,
       shared: seat.shared,
-      action: !seat.name ? 'Add' : 'Edit',
       amount: seat.amount,
       quantity: seat.quantity,
       tax: seat.tax
@@ -70,7 +73,7 @@ export default class Table extends React.Component {
     e.preventDefault()
     const { name, selectedSeat } = this.state
     this.props.onSubmit({ name: name, id: selectedSeat.id })
-    this.setState({ modal: false })
+    this.setState({ nameInput: false })
   }
 
   togglePopover() {
@@ -84,11 +87,11 @@ export default class Table extends React.Component {
 
   render() {
     const { table, splitEqually, applyTaxes, back } = this.props
-    const { modal, name, action, quantity, popoverOpen, amount, shared, bill } = this.state
+    const { modal, name, quantity, popoverOpen, amount, shared, bill } = this.state
     return (
       <div className="container text-center p-1">
         <div className="table">
-          <div className="text-muted"><h5 className="d-flex justify-content-around"> {table.event}&nbsp;&nbsp; {table.date}</h5></div>
+          <div className="text-muted"><h3 className="d-flex justify-content-around"> {table.event}&nbsp;&nbsp; {table.date}</h3></div>
 
           {table.seats.map(seat => {
             return (
@@ -112,31 +115,35 @@ export default class Table extends React.Component {
               <Button size="lg" block onClick={splitEqually}>Split ${(parseFloat(table.subTotal))} Equally</Button>
               {table.taxRate && !table.subTotal ? <Button size="lg" block
                 onClick={applyTaxes}
-              >Apply Taxes</Button> : <Button size="lg" block onClick={back}> {!table.taxRate && !table.subTotal ? 'Finish' : 'Back'} </Button>
+              >Apply Taxes</Button> : <Button size="lg" block onClick={back}> {!table.taxRate && !table.subTotal ? 'Finish' : 'Start Over'} </Button>
               }
 
             </Card>
           </div>
+          <div>
+            <Modal isOpen={this.state.nameInput}>
+              <Form onSubmit={this.handleSubmit} className="p-2">
+                <FormGroup>
+                  <Input className="bg-dark my-2"
+                    id="name-input"
+                    maxLength="6"
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value={name}
+                    onChange={this.handleChange}>
+                  </Input>
+                  <Button color="primary" size="lg" block
+                  >Add Name
+                  </Button>
+                </FormGroup>
+              </Form>
+            </Modal></div>
 
           <div>
             <Modal isOpen={modal} >
-              <ModalHeader className="text-center">
-                <Form onSubmit={this.handleSubmit}>
-                  <FormGroup>
-                    <InputGroup>
-                      <Input className="bg-dark" id="name-input"
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={name}
-                        onChange={this.handleChange}>
-                      </Input>
-                      <InputGroupAddon addonType="append"><Button color="primary"
-                      >{action} Name</Button>
-                      </InputGroupAddon>
-                    </InputGroup>
-                  </FormGroup>
-                </Form>
+              <ModalHeader className="text-center align-middle">
+                <h3 className="text-center align-middle">{name}</h3>
               </ModalHeader>
 
               <ModalBody>
@@ -200,7 +207,7 @@ export default class Table extends React.Component {
               </ModalFooter>
             </Modal></div>
         </div>
-      </div>
+      </div >
     )
   }
 }

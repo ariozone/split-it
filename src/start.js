@@ -4,8 +4,8 @@ export default class Start extends React.Component {
     super(props)
     this.state = {
       seats: 2,
-      subTotal: null,
-      tax: null,
+      subTotal: '',
+      tax: '',
       quantity: '',
       event: '',
       date: '',
@@ -104,7 +104,7 @@ export default class Start extends React.Component {
                 type="number"
                 step="0.01"
                 required
-                thousandSeparator=""
+                // thousandSeparator=""
                 precision="2"
                 className="form-control"
                 aria-label="Amount"
