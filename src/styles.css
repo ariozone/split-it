@@ -87,3 +87,7 @@ table {
 thead {
   background-color: rgb(38, 37, 37) !important;
 }
+
+.name {
+  font-size: 4rem !important;
+}

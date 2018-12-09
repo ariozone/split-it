@@ -91,7 +91,10 @@ export default class Table extends React.Component {
     return (
       <div className="container text-center p-1">
         <div className="table">
-          <div className="text-muted"><h3 className="d-flex justify-content-around"> {table.event}&nbsp;&nbsp; {table.date}</h3></div>
+          <div className="text-muted">
+            <h4 className="d-flex justify-content-around"> {table.event}&nbsp;&nbsp; {table.date}
+            </h4>
+          </div>
 
           {table.seats.map(seat => {
             return (
@@ -138,21 +141,19 @@ export default class Table extends React.Component {
                   </Button>
                 </FormGroup>
               </Form>
-            </Modal></div>
+            </Modal>
+          </div>
 
           <div>
             <Modal isOpen={modal} >
-              <ModalHeader className="text-center align-middle">
-                <h3 className="text-center align-middle">{name}</h3>
-              </ModalHeader>
-
+              <h2 className=" p-1 mt-1 text-center align-middle">{name}</h2>
               <ModalBody>
                 {bill.length > 0 || shared ? <table className="table table-sm table-dark">
                   {this.state.bill.length > 0 ? <thead>
                     <tr>
                       <th>Item</th>
                       <th>QTY</th>
-                      <th>Price</th>
+                      <th>Total $</th>
                     </tr>
                   </thead>
                     : <thead>
@@ -162,7 +163,6 @@ export default class Table extends React.Component {
                         <th></th>
                       </tr>
                     </thead>
-                    // <p className="text-center align-middle mx-auto">No Oreders for this Seat</p>
                   }
                   <tbody>
                     {this.state.bill.map((row, i) => (
@@ -171,7 +171,7 @@ export default class Table extends React.Component {
                     <tr>
                       <td>Shared Items</td>
                       <td>{table.quantity}</td>
-                      <td>${!table.quantity ? table.subTotal : shared}</td>
+                      <td>{!table.quantity ? table.subTotal : shared}</td>
                     </tr>
                   </tbody>
                   <tfoot>
@@ -181,8 +181,8 @@ export default class Table extends React.Component {
                       <td>${this.state.tax}</td>
                     </tr> : null}</tfoot>
                 </table>
-                  : <p className="text-center">No Bill Items
-                  </p>}
+                  : <h5 className="text-center">No Bill Items
+                  </h5>}
 
               </ModalBody>
 
@@ -201,11 +201,12 @@ export default class Table extends React.Component {
                 </Modal>
                 <h6 className="mx-3">Amount: ${parseFloat(amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(quantity)}</h6>
 
-                <Button color="primary" id="Popover1"
-                  onClick={this.togglePopover}>Add Items</Button>
+                {table.subTotal > 0 ? <Button color="primary" id="Popover1"
+                  onClick={this.togglePopover}>Add Items</Button> : null}
                 <Button color="secondary" onClick={this.closeModal}>Done</Button>
               </ModalFooter>
-            </Modal></div>
+            </Modal>
+          </div>
         </div>
       </div >
     )
