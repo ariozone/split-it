@@ -35,7 +35,6 @@ export default class AddItems extends React.Component {
       this.props.addItems({ itemName: itemName, quantity: quantity, price: price })
     }
     this.setState({ itemName: '', quantity: null, price: 0 })
-    this.forceUpdate()
   }
 
   render() {

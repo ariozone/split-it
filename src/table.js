@@ -9,10 +9,8 @@ import {
   Form,
   FormGroup,
   Input,
-  InputGroup,
   Card,
   CardTitle,
-  InputGroupAddon,
   CardText
 } from 'reactstrap'
 
@@ -22,13 +20,16 @@ export default class Table extends React.Component {
     this.state = {
       modal: false,
       popoverOpen: false,
-      name: ' ',
+      name: '',
+      nameInput: false,
       action: 'Add',
       selectedSeat: null,
       bill: [],
+      shared: 0,
       amount: 0,
       quantity: 0,
-      orderedItem: {}
+      orderedItem: {},
+      tax: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -47,14 +48,20 @@ export default class Table extends React.Component {
   }
 
   selectSeat(seat) {
-    this.setState({
+    !seat.name ? this.setState({
+      nameInput: true,
+      selectedSeat: seat,
+      name: ''
+
+    }) : this.setState({
       modal: true,
       selectedSeat: seat,
       name: seat.name,
       bill: seat.orderedList,
-      action: !seat.name ? 'Add' : 'Edit',
+      shared: seat.shared,
       amount: seat.amount,
-      quantity: seat.quantity
+      quantity: seat.quantity,
+      tax: seat.tax
     })
   }
 
@@ -66,7 +73,7 @@ export default class Table extends React.Component {
     e.preventDefault()
     const { name, selectedSeat } = this.state
     this.props.onSubmit({ name: name, id: selectedSeat.id })
-    this.setState({ modal: false })
+    this.setState({ nameInput: false })
   }
 
   togglePopover() {
@@ -80,11 +87,14 @@ export default class Table extends React.Component {
 
   render() {
     const { table, splitEqually, applyTaxes, back } = this.props
-    const { modal, name, action, quantity, popoverOpen, amount } = this.state
+    const { modal, name, quantity, popoverOpen, amount, shared, bill } = this.state
     return (
       <div className="container text-center p-1">
         <div className="table">
-          <div className="text-muted"><h5 className="d-flex justify-content-around"> {table.event}&nbsp;&nbsp; {table.date}</h5></div>
+          <div className="text-muted">
+            <h4 className="d-flex justify-content-around"> {table.event}&nbsp;&nbsp; {table.date}
+            </h4>
+          </div>
 
           {table.seats.map(seat => {
             return (
@@ -106,50 +116,73 @@ export default class Table extends React.Component {
               <CardText>Tax: {table.taxRate.toFixed(2)}%</CardText>
               <CardText></CardText>
               <Button size="lg" block onClick={splitEqually}>Split ${(parseFloat(table.subTotal))} Equally</Button>
-              {table.taxRate && !table.subTotal ? <Button size="lg" block active
+              {table.taxRate && !table.subTotal ? <Button size="lg" block
                 onClick={applyTaxes}
-              >Apply Taxes</Button> : <Button size="lg" block onClick={back}>Back</Button>}
+              >Apply Taxes</Button> : <Button size="lg" block onClick={back}> {!table.taxRate && !table.subTotal ? 'Finish' : 'Start Over'} </Button>
+              }
+
             </Card>
+          </div>
+          <div>
+            <Modal isOpen={this.state.nameInput}>
+              <Form onSubmit={this.handleSubmit} className="p-2">
+                <FormGroup>
+                  <Input className="bg-dark my-2"
+                    id="name-input"
+                    maxLength="6"
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value={name}
+                    onChange={this.handleChange}>
+                  </Input>
+                  <Button color="primary" size="lg" block
+                  >Add Name
+                  </Button>
+                </FormGroup>
+              </Form>
+            </Modal>
           </div>
 
           <div>
             <Modal isOpen={modal} >
-              <ModalHeader className="text-center">
-                <Form onSubmit={this.handleSubmit}>
-                  <FormGroup>
-                    <InputGroup>
-                      <Input className="bg-dark" id="name-input"
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={name}
-                        onChange={this.handleChange}>
-                      </Input>
-                      <InputGroupAddon addonType="append"><Button color="primary"
-                      >{action} Name</Button>
-                      </InputGroupAddon>
-                    </InputGroup>
-                  </FormGroup>
-                </Form>
-              </ModalHeader>
-
+              <h2 className=" p-1 mt-1 text-center align-middle">{name}</h2>
               <ModalBody>
-                {this.state.bill.length > 0 ? <table className="table table-dark">
-                  <thead>
+                {bill.length > 0 || shared ? <table className="table table-sm table-dark">
+                  {this.state.bill.length > 0 ? <thead>
                     <tr>
                       <th>Item</th>
                       <th>QTY</th>
-                      <th>Price</th>
+                      <th>Total $</th>
                     </tr>
                   </thead>
+                    : <thead>
+                      <tr>
+                        <th></th>
+                        <th>No Oreders for this Seat</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  }
                   <tbody>
                     {this.state.bill.map((row, i) => (
                       <tr key={i}>{Object.values(row).map((rowValue, i) => <td key={i}>{rowValue}</td>)}</tr>
                     ))}
-
+                    <tr>
+                      <td>Shared Items</td>
+                      <td>{table.quantity}</td>
+                      <td>{!table.quantity ? table.subTotal : shared}</td>
+                    </tr>
                   </tbody>
-                </table> : <p>No Bill Items
-                </p>}
+                  <tfoot>
+                    {this.state.tax ? <tr className="tax">
+                      <td>Tax:</td>
+                      <td></td>
+                      <td>${this.state.tax}</td>
+                    </tr> : null}</tfoot>
+                </table>
+                  : <h5 className="text-center">No Bill Items
+                  </h5>}
 
               </ModalBody>
 
@@ -166,15 +199,16 @@ export default class Table extends React.Component {
                   <ModalFooter>
                   </ModalFooter>
                 </Modal>
-                <h6 className="mx-3">Amount: ${parseFloat(amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(quantity)}</h6>
+                <h6 className="mx-3">Amount: ${parseFloat(amount).toFixed(2)} &nbsp;&nbsp;&nbsp;&nbsp; QTY: {parseInt(quantity)}</h6>
 
-                <Button color="primary" id="Popover1"
-                  onClick={this.togglePopover}>Add Items</Button>
+                {table.subTotal > 0 ? <Button color="primary" id="Popover1"
+                  onClick={this.togglePopover}>Add Items</Button> : null}
                 <Button color="secondary" onClick={this.closeModal}>Done</Button>
               </ModalFooter>
-            </Modal></div>
+            </Modal>
+          </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
