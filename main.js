@@ -35075,32 +35075,6 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     });
   }
 
-  splitEvenly() {
-    const {
-      table
-    } = this.state;
-    let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length;
-    const seats = table.seats.map(seat => {
-      let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount);
-      seat.amount = seatAmount.toFixed(2);
-      return seat;
-    });
-    const subTotal = 0;
-    this.setState({
-      table: Object.assign({}, table, {
-        seats,
-        subTotal
-      })
-    });
-  }
-
-  createTable(table) {
-    this.setState({
-      table,
-      view: 'table'
-    });
-  }
-
   addItems(seatItems) {
     const {
       table
@@ -35132,6 +35106,33 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     });
   }
 
+  splitEvenly() {
+    const {
+      table
+    } = this.state;
+    let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length;
+    const seats = table.seats.map(seat => {
+      let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount);
+      seat.shared = splitAmount.toFixed(2);
+      seat.amount = seatAmount.toFixed(2);
+      return seat;
+    });
+    const subTotal = 0;
+    this.setState({
+      table: Object.assign({}, table, {
+        seats,
+        subTotal
+      })
+    });
+  }
+
+  createTable(table) {
+    this.setState({
+      table,
+      view: 'table'
+    });
+  }
+
   applyTax() {
     const {
       table
@@ -35140,12 +35141,15 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       const taxRate = parseFloat(table.taxRate);
       let seatAmount = parseFloat(seat.amount);
       let taxAmount = seatAmount * taxRate / 100;
+      seat.tax = taxAmount.toFixed(2);
       seat.amount = parseFloat(seatAmount + taxAmount).toFixed(2);
       return seat;
     });
+    const taxRate = 0;
     this.setState({
       table: Object.assign({}, table, {
-        seats
+        seats,
+        taxRate
       })
     });
   }
@@ -35270,7 +35274,6 @@ class AddItems extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       quantity: null,
       price: 0
     });
-    this.forceUpdate();
   }
 
   render() {
@@ -35326,16 +35329,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Start; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_currency_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-currency-input */ "./node_modules/react-currency-input/lib/react-currency-input.es.js");
-
 
 class Start extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
     this.state = {
       seats: 2,
-      subTotal: '0',
-      tax: 0,
+      subTotal: '',
+      tax: '',
       quantity: '',
       event: '',
       date: '',
@@ -35479,28 +35480,32 @@ class Start extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       htmlFor: "subtotal"
     }, "Bill Subtotal (Before Tax):"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "input-group"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_currency_input__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      required: true,
-      thousandSeparator: "",
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "number",
+      step: "0.01",
+      required: true // thousandSeparator=""
+      ,
       precision: "2",
       className: "form-control",
       "aria-label": "Amount",
       id: "subtotal",
       value: this.state.subTotal,
-      onChangeEvent: this.handleChange
+      onChange: this.handleChange
     }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "form-group mx-5"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
       htmlFor: "tax-input"
     }, "Bill Tax:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "input-group"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_currency_input__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      type: "number",
+      step: "0.01",
       precision: "2",
       className: "form-control",
       "aria-label": "Amount",
       id: "tax-input",
       value: this.state.tax,
-      onChangeEvent: this.handleChange
+      onChange: this.handleChange
     }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "form-group mx-5"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -35587,13 +35592,16 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     this.state = {
       modal: false,
       popoverOpen: false,
-      name: ' ',
+      name: '',
+      nameInput: false,
       action: 'Add',
       selectedSeat: null,
       bill: [],
+      shared: 0,
       amount: 0,
       quantity: 0,
-      orderedItem: {}
+      orderedItem: {},
+      tax: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35617,14 +35625,19 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   selectSeat(seat) {
-    this.setState({
+    !seat.name ? this.setState({
+      nameInput: true,
+      selectedSeat: seat,
+      name: ''
+    }) : this.setState({
       modal: true,
       selectedSeat: seat,
       name: seat.name,
       bill: seat.orderedList,
-      action: !seat.name ? 'Add' : 'Edit',
+      shared: seat.shared,
       amount: seat.amount,
-      quantity: seat.quantity
+      quantity: seat.quantity,
+      tax: seat.tax
     });
   }
 
@@ -35645,7 +35658,7 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       id: selectedSeat.id
     });
     this.setState({
-      modal: false
+      nameInput: false
     });
   }
 
@@ -35675,10 +35688,11 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     const {
       modal,
       name,
-      action,
       quantity,
       popoverOpen,
-      amount
+      amount,
+      shared,
+      bill
     } = this.state;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container text-center p-1"
@@ -35686,7 +35700,7 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "table"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "text-muted"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
       className: "d-flex justify-content-around"
     }, " ", table.event, "\xA0\xA0 ", table.date)), table.seats.map(seat => {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -35709,37 +35723,44 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, "Split $", parseFloat(table.subTotal), " Equally"), table.taxRate && !table.subTotal ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
       size: "lg",
       block: true,
-      active: true,
       onClick: applyTaxes
     }, "Apply Taxes") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
       size: "lg",
       block: true,
       onClick: back
-    }, "Back"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
-      isOpen: modal
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalHeader"], {
-      className: "text-center"
+    }, " ", !table.taxRate && !table.subTotal ? 'Finish' : 'Start Over', " "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+      isOpen: this.state.nameInput
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Form"], {
-      onSubmit: this.handleSubmit
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["InputGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
-      className: "bg-dark",
+      onSubmit: this.handleSubmit,
+      className: "p-2"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
+      className: "bg-dark my-2",
       id: "name-input",
+      maxLength: "6",
       type: "text",
       name: "name",
       placeholder: "Name",
       value: name,
       onChange: this.handleChange
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["InputGroupAddon"], {
-      addonType: "append"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-      color: "primary"
-    }, action, " Name")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], null, this.state.bill.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-      className: "table table-dark"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "QTY"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Price"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.bill.map((row, i) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      color: "primary",
+      size: "lg",
+      block: true
+    }, "Add Name"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+      isOpen: modal
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+      className: " p-1 mt-1 text-center align-middle"
+    }, name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], null, bill.length > 0 || shared ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      className: "table table-sm table-dark"
+    }, this.state.bill.length > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Item"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "QTY"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Total $"))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "No Oreders for this Seat"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.state.bill.map((row, i) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
       key: i
     }, Object.values(row).map((rowValue, i) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       key: i
-    }, rowValue)))))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "No Bill Items")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+    }, rowValue)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Shared Items"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, table.quantity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, !table.quantity ? table.subTotal : shared))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tfoot", null, this.state.tax ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      className: "tax"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Tax:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "$", this.state.tax)) : null)) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+      className: "text-center"
+    }, "No Bill Items")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
       isOpen: popoverOpen,
       toggle: this.togglePopover
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalHeader"], {
@@ -35753,11 +35774,11 @@ class Table extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       closePopover: this.closePopover
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
       className: "mx-3"
-    }, "Amount: $", parseFloat(amount).toFixed(2), " \xA0\xA0\xA0\xA0\xA0\xA0 QTY: ", parseInt(quantity)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    }, "Amount: $", parseFloat(amount).toFixed(2), " \xA0\xA0\xA0\xA0 QTY: ", parseInt(quantity)), table.subTotal > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
       color: "primary",
       id: "Popover1",
       onClick: this.togglePopover
-    }, "Add Items"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    }, "Add Items") : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
       color: "secondary",
       onClick: this.closeModal
     }, "Done"))))));
