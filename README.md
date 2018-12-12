@@ -35,6 +35,12 @@
 </p>
 
 
+#### Each seat has its own bill including ordered items, shared items and taxes.
+<p align="center">
+<img src="see- full-bill.gif"/>
+</p>
+
+
 ## Technologies
 - React.js
 - HTML5
