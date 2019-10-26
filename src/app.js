@@ -36,26 +36,35 @@ export default class App extends Component {
     const seats = table.seats.map(seat => {
       if (seat.id === seatItems.id) {
         seat.orderedList = seat.orderedList.concat(itemsList)
-        let amount = (parseInt(seatItems.orderedItem.quantity)) * (parseFloat(seatItems.orderedItem.price))
+        let amount =
+          parseInt(seatItems.orderedItem.quantity) *
+          parseFloat(seatItems.orderedItem.price)
         let seatAmount = parseFloat(seat.amount)
         seatAmount += amount
         seat.amount = seatAmount
-        let qty = (parseInt(seat.quantity))
+        let qty = parseInt(seat.quantity)
         qty += parseInt(seatItems.orderedItem.quantity)
         seat.quantity = qty
       }
       return seat
     })
-    const subTotal = (parseFloat(table.subTotal) - ((parseInt(seatItems.orderedItem.quantity)) * (parseFloat(seatItems.orderedItem.price)))).toFixed(2)
+    const subTotal = (
+      parseFloat(table.subTotal) -
+      parseInt(seatItems.orderedItem.quantity) *
+        parseFloat(seatItems.orderedItem.price)
+    ).toFixed(2)
 
-    const quantity = (parseInt(table.quantity) - ((seatItems.orderedItem.quantity)))
+    const quantity = parseInt(table.quantity) - seatItems.orderedItem.quantity
 
-    this.setState({ table: Object.assign({}, table, { seats, subTotal, quantity }) })
+    this.setState({
+      table: Object.assign({}, table, { seats, subTotal, quantity })
+    })
   }
 
   splitEvenly() {
     const { table } = this.state
-    let splitAmount = parseFloat(this.state.table.subTotal) / this.state.table.seats.length
+    let splitAmount =
+      parseFloat(this.state.table.subTotal) / this.state.table.seats.length
     const seats = table.seats.map(seat => {
       let seatAmount = parseFloat(seat.amount) + parseFloat(splitAmount)
       seat.shared = splitAmount.toFixed(2)
@@ -89,13 +98,22 @@ export default class App extends Component {
       return <Start onSubmit={this.createTable} />
     }
     if (this.state.view === 'table') {
-      return this.state.table && <Table table={this.state.table} onSubmit={this.updateName} splitEqually={this.splitEvenly} addItems={this.addItems} back={this.goBack} applyTaxes={this.applyTax} />
+      return (
+        this.state.table && (
+          <Table
+            table={this.state.table}
+            onSubmit={this.updateName}
+            splitEqually={this.splitEvenly}
+            addItems={this.addItems}
+            back={this.goBack}
+            applyTaxes={this.applyTax}
+          />
+        )
+      )
     }
   }
 
   render() {
-    return (
-      this.renderView()
-    )
+    return this.renderView()
   }
 }

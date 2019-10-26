@@ -33,6 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-react": "*",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^4.6.0",
     "webpack": "^4.28.4",
